@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_1"
+        android:alpha="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="@color/primary_material_light"
+                android:background="@color/background_material_light"
+                android:layout_margin="@dimen/card_margin">
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resumen de Reservas"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="2dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <LinearLayout
+                        android:padding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:padding="4dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reservas pendientes: "
+                                    android:paddingBottom="2dp"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                                <TextView
+                                    android:id="@+id/textReservasPendientes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="X"
+                                    android:paddingBottom="2dp"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reservas confirmadas: "
+                                    android:paddingBottom="2dp"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                                <TextView
+                                    android:id="@+id/textReservasConfirmadas"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="X"
+                                    android:paddingBottom="2dp"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pendiente de cobro:"
+                                    android:paddingBottom="2dp"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                                <TextView
+                                    android:id="@+id/textReservasPendientesDinero"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="X"
+                                    android:paddingBottom="2dp"
+                                    android:layout_alignParentRight="true"
+                                    android:textSize="@dimen/formularioTextoContenido" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/floatingButtonAgregarReserva"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@drawable/icon_agregarreserva" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/background_material_light"
+                android:layout_margin="@dimen/card_margin">
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resumen liquidaciones"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="2dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <LinearLayout
+                        android:padding="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Cantidad de reservas sin liquidar: "
+                                android:gravity="left"
+                                android:textSize="@dimen/formularioTextoContenido" />
+                            <TextView
+                                android:id="@+id/textPanelReservasSinLiquidar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="right"
+                                android:textSize="@dimen/formularioTextoContenido" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:paddingTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Total por reservas sin liquidar: "
+                                android:gravity="left"
+                                android:textSize="@dimen/formularioTextoContenido" />
+                            <TextView
+                                android:id="@+id/textPanelTotalReservasSinLiquidar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="right"
+                                android:textSize="@dimen/formularioTextoContenido" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:paddingTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Total pendiente de pago: "
+                                android:gravity="left"
+                                android:textSize="@dimen/formularioTextoContenido" />
+                            <TextView
+                                android:id="@+id/textPanelTotalPendientePago"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="right"
+                                android:textStyle=""
+                                android:textSize="@dimen/formularioTextoContenido" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

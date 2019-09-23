@@ -1,0 +1,16 @@
+			@font-face {
+				font-family: 'comfortaa-light';
+				font-style: normal;
+				src: url('//www.transportemorande.cl/wp-content/uploads/useanyfont/170213073401Comfortaa-Light.eot');
+				src: local('comfortaa-light'), url('//www.transportemorande.cl/wp-content/uploads/useanyfont/170213073401Comfortaa-Light.eot') format('embedded-opentype'), url('//www.transportemorande.cl/wp-content/uploads/useanyfont/170213073401Comfortaa-Light.woff') format('woff');
+			}
+            
+            .comfortaa-light{font-family: 'comfortaa-light' !important;}
+            
+						body{
+					font-family: '' !important;
+				}
+						body{
+					font-family: 'comfortaa-light' !important;
+				}
+		

@@ -1,0 +1,10 @@
+﻿@model TransporteMorande.Models.TurismoFormModel
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(document).ready(function () {
+        alert('@Model.Mensaje');
+        window.location.href = '../Turismo';
+    });
+
+</script>
+

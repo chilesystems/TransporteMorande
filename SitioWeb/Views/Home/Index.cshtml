@@ -1,0 +1,834 @@
+﻿@model List<SitioWeb.Models.Slider>
+<section class="content-area  pt0 ">
+    <div id="main" class=""
+         role="main">
+        <div id="hugeit_reslider_widget-2" class="widget widget_hugeit_reslider_widget">
+            <!-- Construct js Slider -->
+            <script>
+                            var reslider9 = {
+                                id: '9',
+                                name: 'slider_inicio',
+                                params: JSON.parse('{"autoplay":1,"pauseonhover":0,"rightclickprotection":1,"behavior":1,"effect":{"type":13,"duration":2000,"interval":2000},"thumbnails":{"show":0,"positioning":0},"custom":{"type":"button","show":1,"style":{"width":"100","height":"50","left":"100px","top":"200px","color":"000000","opacity":"50","font":{"size":"14"},"border":{"color":"3478FF","width":"2","radius":"10"},"background":{"color":"E8FF81","hover":"30FF4F"}}},"title":{"show":0,"position":"1","style":{"width":1388,"height":43,"left":"0px","top":"268px","color":"FFFFFF","opacity":70,"font":{"size":16},"border":{"color":"FFFFFF","width":0,"radius":2},"background":{"color":"CCCCCC","hover":"000000"}}},"description":{"show":0,"position":"1","style":{"width":196,"height":48,"left":"1108.3px","top":"508.25px","color":"FFFFFF","opacity":70,"font":{"size":14},"border":{"color":"FFFFFF","width":0,"radius":2},"background":{"color":"CCCCCC","hover":"000000"}}},"arrows":{"show":0,"type":1,"style":{"background":{"width":"49","height":"49","left":"91px 46px","right":"-44px 1px","hover":{"left":"91px 46px","right":"-44px 1px"},"free":{"width":"49","height":"49","left":"91px 46px","right":"-44px 1px","hover":{"left":"91px 46px","right":"-44px 1px"}}}}},"bullets":{"show":2,"type":"0","position":0,"autocenter":"0","rows":1,"s_x":10,"s_y":10,"orientation":1,"style":{"background":{"width":"60","height":"60","color":{"hover":"646464","active":"30FF4F","link":"CCCCCC"}},"position":{"top":"16px","left":"10px","free":{"top":"16px","left":"10px"}}}}}'),
+                                style: JSON.parse('{"background":"blue;","border":"1px solid red;","color":"yellow","width":"1350","height":"800","marginLeft":"0","marginRight":"0","marginTop":"0","marginBottom":"0"}'),
+                                custom: JSON.parse('{}'),
+                                count: '4',
+                                slides: {}
+                };
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <text>reslider9['slides']['slide' + '</text>(i + 89).ToString();<text>'] = { };</text>
+                    <text>reslider9['slides']['slide' + '</text>(i + 89).ToString();<text>']['id'] = '</text>(i + 89).ToString();<text>';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['title'] = '';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['description'] = '';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['image_link'] = '/contacto/';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['url'] = '</text>Model[i].Imagen.ToString();<text>';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['type'] = '';</text>
+                    <text>reslider9.slides['slide' + '</text>(i + 89).ToString();<text>']['custom'] = JSON.parse('{}');</text>
+                }
+            </script>
+            <div id="slider9_container" style="width: 1350px; height: 800px;">
+                <div data-u="loading" class="reslide_loading">
+                    <div></div>
+                </div>
+                <!-- Slides Container -->
+                <div data-u="slides" class="reslide_slides">
+                    @for(int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="slide9_@i.ToString()">
+                            <a href="/contacto/">
+                                <img class="image_@((i+89).ToString())" src=@Model[i].Imagen />
+                            </a>
+
+                        </div>
+                    }
+                    
+                    @*<div class="slide9_88">
+                        <a href="/contacto/">
+                            <img class="image_88" src="~/wp-content/uploads/2018/03/3_vallenevado.jpg" alt="~/wp-content/uploads/2018/03/3_vallenevado.jpg" />
+                        </a>
+
+                    </div>
+                    <div class="slide9_87">
+                        <a href="/contacto/">
+                            <img class="image_87" src="~/wp-content/uploads/2018/03/2_embalseelyeso.jpg" alt="~/wp-content/uploads/2018/03/2_embalseelyeso.jpg" />
+                        </a>
+
+                    </div>
+                    <div class="slide9_86">
+                        <a href="/contacto/">
+                            <img class="image_86" src="~/wp-content/uploads/2018/03/1_viñadelmar.jpg" alt="~/wp-content/uploads/2018/03/1_viñadelmar.jpg" />
+                        </a>
+
+                    </div>*@
+
+                </div>
+
+                <!--#region Bullet Navigator Skin Begin -->
+                <!-- bullet navigator container -->
+                <div data-u="navigator" class=" reslide_navigator" style="bottom: 16px; right: 10px;">
+                    <!-- bullet navigator item prototype -->
+                    <div data-u="prototype" class="reslide_dot"></div>
+                </div>
+                <!--#endregion Bullet Navigator Skin End -->
+                <!-- Arrow Left -->
+                <span data-u="arrowleft" class=" reslide_arrow_left" style="top: 123px; left: 8px;">
+                </span>
+                <!-- Arrow Right -->
+                <span data-u="arrowright" class=" reslide_arrow_right" style="top: 123px; right: 8px;">
+                </span>
+                <!-- Trigger -->
+                <div data-u="thumbnavigator" class="reslide-thumbnail9" style="right: 0px; bottom: 0px;">
+                    <!-- Thumbnail Item Skin Begin -->
+                    <div data-u="slides" style=" bottom: 25px; right: 30px;cursor: default;">
+                        <div data-u="prototype" class="p">
+                            <div class=w><div data-u="thumbnailtemplate" class="t"></div></div>
+                            <div class=c></div>
+                        </div>
+                    </div>
+                    <!-- Thumbnail Item Skin End -->
+                </div>
+            </div>
+            <style>
+                #slider9_container {
+                    margin: 0 auto;
+                    margin-bottom: 10px;
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    display: none;
+                    overflow: hidden;
+                }
+
+                    #slider9_container .reslide_slides img {
+                        display: none;
+                    }
+
+                    #slider9_container .reslide_loading {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+
+                        #slider9_container .reslide_loading > div {
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            background: #ccc;
+                        }
+
+                    #slider9_container .reslide_slides {
+                        width: 1350px;
+                        height: 800px;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        overflow: hidden;
+                        cursor: move;
+                    }
+
+                    /*Title and description defaults ***/
+
+                    #slider9_container .reslidetitle, #slider9_container .reslidedescription {
+                        position: absolute;
+                        overflow: hidden;
+                        z-index: 2;
+                    }
+
+                        #slider9_container .reslidetitle > div, #slider9_container .reslidedescription > div {
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            font-size: 14px;
+                        }
+
+                        #slider9_container .reslidetitle > span, #slider9_container .reslidedescription > span {
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            z-index: 1;
+                            padding: 10px;
+                        }
+
+                    /*Title styles ***/
+
+
+                    #slider9_container .reslidetitle {
+                        width: 1388px;
+                        height: 43px;
+                        top: 268px;
+                        left: 0px;
+                        border: 0px solid #FFFFFF;
+                        border-radius: 2px;
+                    }
+
+                        #slider9_container .reslidetitle > div {
+                            background: #CCCCCC;
+                            opacity: 0.7;
+                            filter: alpha(opacity=70);
+                        }
+
+                        #slider9_container .reslidetitle > span {
+                            padding: 10px;
+                            text-align: center;
+                            font-size: 16px;
+                            color: #FFFFFF;
+                        }
+
+                    /*Description styles ***/
+
+                    #slider9_container .reslidedescription {
+                        width: 196px;
+                        height: 48px;
+                        top: 508.25px;
+                        left: 1108.3px;
+                        border: 0px solid #FFFFFF;
+                        border-radius: 2px;
+                    }
+
+                        #slider9_container .reslidedescription > div {
+                            background: #CCCCCC;
+                            opacity: 0.7;
+                            filter: alpha(opacity=70);
+                        }
+
+                        #slider9_container .reslidedescription > span {
+                            font-size: 14px;
+                            color: #FFFFFF;
+                        }
+
+                    /* slide static elements ***/
+
+
+                    #slider9_container #slider9_container .reslide_any {
+                        width: 100px;
+                        height: 26px;
+                        position: absolute;
+                        top: 10px;
+                        left: 400px;
+                    }
+                    /* Sliders Customs Statics***/
+
+                    /*** navigator ***/
+
+                    #slider9_container .reslide_navigator {
+                        position: absolute;
+                    }
+
+                        #slider9_container .reslide_navigator div, #slider9_container .reslide_navigator div:hover, #slider9_container .reslide_navigator .av {
+                            position: absolute;
+                            /* size of bullet elment */
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 10px;
+                            filter: alpha(opacity=70);
+                            opacity: .7;
+                            overflow: hidden;
+                            cursor: pointer;
+                            border: #4B4B4B 1px solid;
+                        }
+
+                        #slider9_container .reslide_navigator div {
+                            background-color: #CCCCCC;
+                        }
+
+                body #slider9_container .reslide_navigator div:hover {
+                    background-color: #646464;
+                }
+
+                #slider9_container .reslide_navigator .reslide_dotav {
+                    background-color: #74B8CF !important;
+                    border: #fff 1px solid;
+                }
+
+                #slider9_container .reslide_navigator .dn, #slider9_container .reslide_navigator .dn:hover {
+                    background-color: #555555;
+                }
+
+                /* arrows */
+
+                #slider9_container .reslide_arrow_left, #slider9_container .reslide_arrow_right {
+                    display: block;
+                    position: absolute;
+                    /* size of arrow element */
+                    width: 49px;
+                    height: 49px;
+                    cursor: pointer;
+                    background-image: url(/wp-content/plugins/slider/Front_images/arrows/arrows-1.png);
+                    overflow: hidden;
+                    z-index: 9999;
+                }
+
+                #slider9_container .reslide_arrow_left {
+                    background-position: 91px 46px;
+                }
+
+                    #slider9_container .reslide_arrow_left:hover {
+                        background-position: 91px 46px;
+                    }
+
+                #slider9_container .reslide_arrow_right {
+                    background-position: -44px 1px;
+                }
+
+                    #slider9_container .reslide_arrow_right:hover {
+                        background-position: -44px 1px;
+                    }
+
+
+                #slider9_container .reslide_arrow_left.reslide_arrow_leftdn {
+                    background-position: 91px 46px;
+                }
+
+                #slider9_container .reslide_arrow_right.reslide_arrow_leftdn {
+                    background-position: -44px 1px;
+                }
+                /* thumbnail  */
+
+                .reslide-thumbnail9 {
+                    position: absolute;
+                    /* size of thumbnail navigator container */
+                    height: 60px;
+                    width: 1350px;
+                    z-index: 1;
+                }
+
+                #slider9_container .reslide-thumbnail9 > div {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    max-width: 1340px;
+                }
+
+                #slider9_container .reslide-thumbnail9 .p {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    /* max-width: 62px;*/
+                    height: 32px;
+                }
+
+                #slider9_container .reslide-thumbnail9 .t {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+
+                #slider9_container .reslide-thumbnail9 .w, #slider9_container .reslide-thumbnail9 .pav:hover .w {
+                    position: absolute;
+                    /*  max-width: 60px;*/
+                    height: 30px;
+                    box-sizing: border-box;
+                    border: #0099FF 1px solid;
+                }
+
+                #slider9_container .reslide-thumbnail9 .pdn .w, #slider9_container .reslide-thumbnail9 .pav .w {
+                    border-style: dashed;
+                }
+
+                #slider9_container .reslide-thumbnail9 .c {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    /* max-width: 62px;*/
+                    height: 30px;
+                    background-color: #000;
+                    filter: alpha(opacity=45);
+                    opacity: .45;
+                    transition: opacity .6s;
+                    -moz-transition: opacity .6s;
+                    -webkit-transition: opacity .6s;
+                    -o-transition: opacity .6s;
+                }
+
+                #slider9_container .reslide-thumbnail9 .p:hover .c, #slider9_container .reslide-thumbnail9 .pav .c {
+                    filter: alpha(opacity=0);
+                    opacity: 0;
+                }
+
+                #slider9_container .reslide-thumbnail9 .p:hover .c {
+                    transition: none;
+                    -moz-transition: none;
+                    -webkit-transition: none;
+                    -o-transition: none;
+                }
+
+                * html #slider9_container .reslide-thumbnail9 .w {
+                    width /**/: 62px;
+                    height /**/: 32px;
+                }
+            </style>
+            <script>
+
+                            if (reslider9["params"]["rightclickprotection"]) {
+                                jQuery('div[id*=slider]').bind("contextmenu", function (e) {
+                                    e.preventDefault();
+                                });
+                            }
+
+                            var $PlayCondition = 1;
+                            var c_slider9;
+
+                            init_c_slider9 = function (containerId) {
+
+                                switch (reslider9["params"]["effect"]["type"]) {
+                                    case 0:
+                                        var reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], $Opacity: 2, $Brother: { $Duration: 1000, $Opacity: 2 } };
+                                        break;
+                                    case 1:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: -0.3, y: 0.5, $Zoom: 1, $Rotate: 0.1, $During: { $Left: [0.6, 0.4], $Top: [0.6, 0.4], $Rotate: [0.6, 0.4], $Zoom: [0.6, 0.4] }, $Easing: { $Left: $JssorEasing$.$EaseInQuad, $Top: $JssorEasing$.$EaseInQuad, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInQuad }, $Opacity: 2, $Brother: { $Duration: 1000, $Zoom: 11, $Rotate: -0.5, $Easing: { $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInQuad }, $Opacity: 2, $Shift: 200 } };
+                                        break;
+                                    case 2:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: 0.25, $Zoom: 1.5, $Easing: { $Left: $JssorEasing$.$EaseInWave, $Zoom: $JssorEasing$.$EaseInSine }, $Opacity: 2, $ZIndex: -10, $Brother: { $Duration: 1400, x: -0.25, $Zoom: 1.5, $Easing: { $Left: $JssorEasing$.$EaseInWave, $Zoom: $JssorEasing$.$EaseInSine }, $Opacity: 2, $ZIndex: -10 } }
+                                        break;
+                                    case 3:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: 0.5, $Cols: 2, $ChessMode: { $Column: 3 }, $Easing: { $Left: $JssorEasing$.$EaseInOutCubic }, $Opacity: 2, $Brother: { $Duration: 1500, $Opacity: 2 } }
+                                        break;
+                                    case 4:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: -0.1, y: -0.7, $Rotate: 0.1, $During: { $Left: [0.6, 0.4], $Top: [0.6, 0.4], $Rotate: [0.6, 0.4] }, $Easing: { $Left: $JssorEasing$.$EaseInQuad, $Top: $JssorEasing$.$EaseInQuad, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInQuad }, $Opacity: 2, $Brother: { $Duration: 1000, x: 0.2, y: 0.5, $Rotate: -0.1, $Easing: { $Left: $JssorEasing$.$EaseInQuad, $Top: $JssorEasing$.$EaseInQuad, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInQuad }, $Opacity: 2 } }
+                                        break;
+                                    case 5:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: -1, y: -0.5, $Delay: 50, $Cols: 8, $Rows: 4, $Formation: $JssorSlideshowFormations$.$FormationSquare, $Easing: { $Left: $JssorEasing$.$EaseSwing, $Top: $JssorEasing$.$EaseInJump }, $Assembly: 260, $Round: { $Top: 1.5 } }
+                                        break;
+                                    case 6:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], $Delay: 30, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Easing: $JssorEasing$.$EaseOutQuad, $Assembly: 2049 }
+                                        break;
+                                    case 7:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: -1, $Easing: $JssorEasing$.$EaseInQuad };
+                                        break;
+                                    case 8:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: 1, $Easing: $JssorEasing$.$EaseInQuad };
+                                        break;
+                                    case 9:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], y: -1, $Easing: $JssorEasing$.$EaseInQuad };
+                                        break;
+                                    case 10:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], y: 1, $Easing: $JssorEasing$.$EaseInQuad };
+                                        break;
+                                    case 11:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: -1, y: 2, $Rows: 2, $Zoom: 11, $Rotate: 1, $ChessMode: { $Row: 15 }, $Easing: { $Left: $JssorEasing$.$EaseInCubic, $Top: $JssorEasing$.$EaseInCubic, $Zoom: $JssorEasing$.$EaseInCubic, $Opacity: $JssorEasing$.$EaseOutQuad, $Rotate: $JssorEasing$.$EaseInCubic }, $Assembly: 2049, $Opacity: 2, $Round: { $Rotate: 0.8 } };
+                                        break;
+                                    case 12:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: 2, y: 1, $Cols: 2, $Zoom: 11, $Rotate: 1, $ChessMode: { $Column: 15 }, $Easing: { $Left: $JssorEasing$.$EaseInCubic, $Top: $JssorEasing$.$EaseInCubic, $Zoom: $JssorEasing$.$EaseInCubic, $Opacity: $JssorEasing$.$EaseOutQuad, $Rotate: $JssorEasing$.$EaseInCubic }, $Assembly: 2049, $Opacity: 2, $Round: { $Rotate: 0.7 } };
+                                        break;
+                                    case 13:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], $Zoom: 11, $Easing: { $Zoom: $JssorEasing$.$EaseInCubic, $Opacity: $JssorEasing$.$EaseOutQuad }, $Opacity: 2 };
+                                        break;
+                                    case 14:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], x: 0.3, y: 0.3, $Cols: 2, $Rows: 2, $During: { $Left: [0.3, 0.7], $Top: [0.3, 0.7] }, $ChessMode: { $Column: 3, $Row: 12 }, $Easing: { $Left: $JssorEasing$.$EaseInCubic, $Top: $JssorEasing$.$EaseInCubic, $Opacity: $JssorEasing$.$EaseLinear }, $Opacity: 2 };
+                                        break;
+                                    case 15:
+                                        reslide_effect = { $Duration: reslider9["params"]["effect"]["duration"], $Delay: 20, $Clip: 3, $SlideOut: true, $Easing: { $Clip: $JssorEasing$.$EaseOutCubic, $Opacity: $JssorEasing$.$EaseLinear }, $Assembly: 260, $Opacity: 2 };
+                                        break;
+                                };
+
+
+                                var _SlideshowTransitions = [
+                                    reslide_effect
+                                ];
+                                if (!reslider9['params']['thumbnails']['positioning']) {
+                                    var thumbnailsCount = Math.ceil(reslider9.count - 1);
+                                }
+                                else {
+                                    var thumbnailsCount = Math.ceil(reslider9.count);
+                                }
+                                var options = {
+                                    $AutoPlay: (reslider9["params"]["autoplay"] == 1) ? true : false,                                   //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                                    $SlideDuration: 500,
+                                    $PauseOnHover: reslider9["params"]["pauseonhover"],
+                                    $AutoPlayInterval: reslider9["params"]["effect"]["interval"],
+                                    //$AutoPlaySteps : -1,
+                                    //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+
+                                    $BulletNavigatorOptions: {                                //[Optional] Options to specify and enable navigator or not
+                                        $Class: $JssorBulletNavigator$,                       //[Required] Class to create navigator instance
+                                        $ChanceToShow: reslider9["params"]["bullets"]["show"],                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                                        $AutoCenter: reslider9["params"]["bullets"]["autocenter"],                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                                        $Steps: 1,                                      //[Optional] Steps to go for each navigation request, default value is 1
+                                        $Rows: reslider9["params"]["bullets"]["rows"],                                      //[Optional] Specify lanes to arrange items, default value is 1
+                                        $SpacingX: reslider9["params"]["bullets"]["s_x"],                                  //[Optional] Horizontal space between each item in pixel, default value is 0
+                                        $SpacingY: reslider9["params"]["bullets"]["s_y"],                                  //[Optional] Vertical space between each item in pixel, default value is 0
+                                        $Orientation: reslider9["params"]["bullets"]["orientation"]                                //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                                    },
+                                    $ArrowNavigatorOptions: {                       //[Optional] Options to specify and enable arrow navigator or not
+                                        $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                                        $ChanceToShow: reslider9["params"]["arrows"]["show"],                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                                        $AutoCenter: 2,                                 //[Optional] Auto center arrows in parent container, 0 No, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                                        $Steps: 1                                       //[Optional] Steps to go for each navigation request, default value is 1
+                                    },
+                                    $SlideshowOptions: {                                //[Optional] Options to specify and enable slideshow or not
+                                        $Class: $JssorSlideshowRunner$,                 //[Required] Class to create instance of slideshow
+                                        $Transitions: _SlideshowTransitions,            //[Required] An array of slideshow transitions to play slideshow
+                                        $TransitionsOrder: 1,                           //[Optional] The way to choose transition to play slide, 1 Sequence, 0 Random
+                                        $ShowLink: true                                    //[Optional] Whether to bring slide link on top of the slider when slideshow is running, default value is false
+                                    },
+                                    $ThumbnailNavigatorOptions: {
+                                        $Class: $JssorThumbnailNavigator$,              //[Required] Class to create thumbnail navigator instance
+                                        $ChanceToShow: reslider9["params"]["thumbnails"]["show"],                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                                        $ActionMode: 1,                                 //[Optional] 0 None, 1 act by click, 2 act by mouse hover, 3 both, default value is 1
+                                        $AutoCenter: 0,                                 //[Optional] Auto center thumbnail items in the thumbnail navigator container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 3
+                                        $Rows: 1,                                      //[Optional] Specify lanes to arrange thumbnails, default value is 1
+                                        $SpacingX: 3,                                   //[Optional] Horizontal space between each thumbnail in pixel, default value is 0
+                                        $SpacingY: 3,                                   //[Optional] Vertical space between each thumbnail in pixel, default value is 0
+                                        $Cols: thumbnailsCount,                              //[Optional] Number of pieces to display, default value is 1
+                                        $ParkingPosition: 0,                          //[Optional] The offset position to park thumbnail
+                                        $Orientation: 1,                                //[Optional] Orientation to arrange thumbnails, 1 horizental, 2 vertical, default value is 1
+                                        $NoDrag: false                                //[Optional] Disable drag or not, default value is false
+                                    }
+
+                                };
+
+                                c_slider9 = new $JssorSlider$(containerId, options);
+                            }
+
+                            jQuery(function ($) {
+
+                                (function initReslideSlider() {
+
+                                    /*** ####bullets#### ***/
+
+                                    switch (+reslider9["params"]["bullets"]["position"]) {
+                                        case 0:
+                                            reslider9["params"]["bullets"]["autocenter"] = 0;
+                                            var css_bullets_obj = { "left": reslider9["params"]["bullets"]["style"]["position"]["left"], "top": reslider9["params"]["bullets"]["style"]["position"]["top"] };
+                                            var css_bullets = "left:" + reslider9["params"]["bullets"]["style"]["position"]["left"] + ";top:" + reslider9["params"]["bullets"]["style"]["position"]["top"];
+                                            break;
+                                        case 1:
+                                            reslider9["params"]["bullets"]["autocenter"] = 1;
+                                            var css_bullets_obj = { "right": "", "top": reslider9["params"]["bullets"]["style"]["position"]["top"], "left": "", "bottom": "" };
+                                            var css_bullets = "top:" + reslider9["params"]["bullets"]["style"]["position"]["top"];
+                                            break;
+                                        case 2:
+                                            reslider9["params"]["bullets"]["autocenter"] = 0;
+                                            var css_bullets_obj = { "right": reslider9["params"]["bullets"]["style"]["position"]["right"], "top": reslider9["params"]["bullets"]["style"]["position"]["top"] };
+                                            var css_bullets = "right:" + reslider9["params"]["bullets"]["style"]["position"]["right"] + ";top:" + reslider9["params"]["bullets"]["style"]["position"]["top"];
+                                            break;
+                                        case 3:
+                                            reslider9["params"]["bullets"]["autocenter"] = 2;
+                                            var css_bullets_obj = { "right": "", "top": "", "left": reslider9["params"]["bullets"]["style"]["position"]["left"], "bottom": "" };
+                                            var css_bullets = "left:" + reslider9["params"]["bullets"]["style"]["position"]["left"];
+                                            break;
+                                        case 4:
+                                            reslider9["params"]["bullets"]["autocenter"] = 3;
+                                            var css_bullets_obj = { "right": "", "top": "", "left": "", "bottom": "" };
+                                            var css_bullets = "";
+                                            break;
+                                        case 5:
+                                            reslider9["params"]["bullets"]["autocenter"] = 2;
+                                            var css_bullets_obj = { "right": reslider9["params"]["bullets"]["style"]["position"]["right"], "top": "", "left": "", "bottom": "" };
+                                            var css_bullets = "right:" + reslider9["params"]["bullets"]["style"]["position"]["right"];
+                                            break;
+                                        case 6:
+                                            reslider9["params"]["bullets"]["autocenter"] = 0;
+                                            var css_bullets_obj = { "left": reslider9["params"]["bullets"]["style"]["position"]["left"], "bottom": reslider9["params"]["bullets"]["style"]["position"]["bottom"] };
+                                            var css_bullets = "left:" + reslider9["params"]["bullets"]["style"]["position"]["left"] + ";bottom:" + reslider9["params"]["bullets"]["style"]["position"]["bottom"];
+                                            break;
+                                        case 7:
+                                            reslider9["params"]["bullets"]["autocenter"] = 1;
+                                            var css_bullets_obj = { "left": "", "bottom": reslider9["params"]["bullets"]["style"]["position"]["bottom"], "right": "" };
+                                            var css_bullets = "bottom:" + reslider9["params"]["bullets"]["style"]["position"]["bottom"];
+                                            break;
+                                        case 8:
+                                            reslider9["params"]["bullets"]["autocenter"] = 0;
+                                            var css_bullets_obj = { "left": "", "bottom": reslider9["params"]["bullets"]["style"]["position"]["bottom"], "right": reslider9["params"]["bullets"]["style"]["position"]["right"] };
+                                            var css_bullets = "bottom:" + reslider9["params"]["bullets"]["style"]["position"]["bottom"] + ";right:" + reslider9["params"]["bullets"]["style"]["position"]["right"];
+                                            break;
+                                    }
+                                    _reslide.find('#slider9_container', '.reslide_navigator')[0].addStyle(css_bullets);
+                                    if (reslider9.count) {
+                                        var thubmnailCWidth = jQuery('.reslide-thumbnail9').width();
+                                        var thumbWidth = thubmnailCWidth / reslider9.count;
+                                        if (reslider9['params']['thumbnails']['positioning'])
+                                            jQuery('.reslide-thumbnail9 .c,.reslide-thumbnail9 .p,.reslide-thumbnail9 .w').width(thumbWidth - 4);
+                                        else {
+                                            jQuery('.reslide-thumbnail9 .c,.reslide-thumbnail9 .p,.reslide-thumbnail9 .w').width(58);
+                                            jQuery('.reslide-thumbnail9 .w').width(56);
+                                            jQuery('.reslide-thumbnail9 > div').css('max-width', (jQuery('.reslide-thumbnail9').width() - 20) + 'px');//width(58);
+                                            var walk = jQuery('.reslide-thumbnail9').width() - 20;
+                                            var walkcount = Math.floor(walk / 61) - 1;
+                                            walk = walkcount * 61 - 3;
+                                            jQuery('.reslide-thumbnail9 > div').css('max-width', walk + 'px');
+                                        }
+                                    }
+                                    jQuery('#slider9_container .reslide_slides img').css('display', 'block');
+
+                                    init_c_slider9("slider9_container");
+
+                                })();
+                                function ScaleSlider() {
+                                    var parentWidth = $('#slider9_container').parent().width();
+                                    jQuery('#slider9_container').css('display', 'block');
+
+
+                                    if (parentWidth) {
+
+                                        if (parentWidth < reslider9['style']['width']) {
+                                            c_slider9.$ScaleWidth(parentWidth);
+                                            jQuery('#slider9_container > div').css('overflow', 'hidden');
+
+                                        } else {
+                                            c_slider9.$ScaleWidth(reslider9['style']['width']);
+                                        }
+                                    }
+                                    else
+                                        window.setTimeout(ScaleSlider, 10);
+                                }
+                                $(window).bind("load", ScaleSlider);
+                                $(window).bind("resize", ScaleSlider);
+                                $(window).bind("orientationchange", ScaleSlider);
+
+                                //responsive code end
+                                jQuery('.reslide_arrow_left').off('click');
+                                jQuery('.reslide_arrow_left').on('click', function () {
+                                    c_slider9.$NextPlay();
+                                });
+                                jQuery('.reslide_arrow_right').click(function () {
+                                    c_slider9.$PrevPlay();
+                                });
+                            });
+
+
+                            if (reslider9['params']['behavior'] === 0) {
+
+                                jQuery('#slider9_container img[class*=image_]').each(function () {
+                                    jQuery(this).css({
+                                        height: '100%',
+                                        width: '100%'
+                                    });
+                                });
+                            } else if (reslider9['params']['behavior'] === 1) {
+                                jQuery('#slider9_container img[class*=image_]').each(function () {
+                                    var naturalWidth = jQuery(this).prop('naturalWidth'),
+                                        naturalHeight = jQuery(this).prop('naturalHeight'),
+                                        contWidth = '1350',
+                                        contHeight = '800',
+                                        naturalRatio = naturalWidth / naturalHeight,
+                                        defaultRatio = contWidth / contHeight;
+
+                                    if (naturalRatio > defaultRatio) {
+                                        jQuery(this).css({
+                                            width: '100%',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            position: 'absolute'
+                                        });
+                                    } else {
+                                        jQuery(this).css({
+                                            height: '100%',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            position: 'relative'
+                                        });
+                                    }
+
+                                });
+                            } else if (reslider9['params']['behavior'] === 2) {
+                                jQuery('#slider9_container img[class*=image_]').each(function () {
+                                    var naturalWidth = jQuery(this).prop('naturalWidth'),
+                                        naturalHeight = jQuery(this).prop('naturalHeight'),
+                                        contWidth = '1350',
+                                        contHeight = '800',
+                                        naturalRatio = naturalWidth / naturalHeight,
+                                        defaultRatio = contWidth / contHeight;
+                                    jQuery(this).css({
+                                        position: "absolute",
+                                        maxWidth: "none"
+                                    });
+
+                                    if (naturalRatio <= defaultRatio) {
+                                        jQuery(this).css({
+                                            width: '100%',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)'
+                                        });
+                                    } else {
+                                        jQuery(this).css({
+                                            height: '100%',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)'
+                                        });
+                                    }
+                                });
+                            }
+
+            </script>
+        </div><div id="shapely_home_parallax-3" class="widget shapely_home_parallax">
+            <section class=" border-bottom">
+                <div class="container">
+
+                    <div class="row align-children">
+
+                        <div class="col-md-7 col-sm-6 text-center mb-xs-24">
+                            <img class="cast-shadow img-responsive" alt="Servicio Empresas"
+                                 src="~/wp-content/uploads/2017/02/home_empresas.jpg">
+                        </div>
+                        <div class="col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                            <div class="">
+
+                                @if (TempData["idioma"].ToString() == "pt")
+                                {
+                                    <h3>Serviços Empresas</h3>
+                                    <p class="mb32">
+                                        Oferecemos as empresas: Condutores  profissionais; Veículos capacitados a realizar um serviço de : Qualidade, segurança, pontualidade, seriedade e comodidade durante o transporte de seus funcionários.
+                                    </p>
+                                    <a class="btn btn-lg btn-filled" href="/servicios-empresas/">Ler Mais</a>
+                                }
+                                else
+                                {
+                                    <h3>Servicio Empresas</h3>
+                                    <p class="mb32">
+                                        Ofrecemos a las empresas: Conductores profesionales, Vehículos acondicionados para brindar un servicio de: Calidad, seguridad, puntualidad, seriedad y comodidad durante el traslado de sus funcionarios.
+                                    </p>
+                                    <a class="btn btn-lg btn-filled" href="/servicios-empresas/">Leer Más</a>
+                                }
+                            </div>
+                        </div>
+                        <!--end of row-->
+                    </div>
+                </div>
+            </section>
+            <div class="clearfix"></div>
+        </div><div id="shapely_home_parallax-4" class="widget shapely_home_parallax">
+            <section class="bg-secondary border-bottom">
+                <div class="container">
+
+                    <div class="row align-children">
+
+
+                        <div class="col-md-4 col-sm-5 mb-xs-24">
+                            @if (TempData["idioma"].ToString() == "pt")
+                            {
+                                <h3>Turismo</h3>
+                                <p class="mb32">
+                                    Oferecemos a nossos Turistas e Agencias: Condutores profissionais, Veículos capacitados para transportar los por todo Chile, fornecendo um serviço de: Qualidade, pontualidade, seriedade e comodidade durante a sua estadia no Chile.
+                                </p>
+                                <a class="btn btn-lg btn-filled" href="/turismo">Ler Mais</a>
+                            }
+                            else
+                            {
+                                <h3>Turismo</h3>
+                                <p class="mb32">
+                                    Ofrecemos a nuestros Turistas y Agencias: Conductores profesionales, Vehículos acondicionados para brindar un servicio de: Calidad, seguridad, puntualidad, seriedad y comodidad durante el traslado de nuestros turistas.
+                                </p>
+                                <a class="btn btn-lg btn-filled" href="/turismo">Leer Más</a>
+                            }
+
+                        </div>
+                        <!--end of row-->
+                        <div class="col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 text-center">
+                            <img class="cast-shadow img-responsive" alt="Turismo"
+                                 src="~/wp-content/uploads/2017/02/home_turismo.jpg">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="clearfix"></div>
+        </div><div id="shapely_home_parallax-6" class="widget shapely_home_parallax">
+            <section class="small-screen image-bg p0 border-bottom">
+                <div class="parallax-window " data-parallax="scroll" data-image-src="/wp-content/uploads/2018/03/home_servicioempresas.jpg">
+                    <div class="">
+
+                        <div class="row">
+
+
+                            <div class="top-parallax-section">
+                                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                                    @if (TempData["idioma"].ToString() == "pt")
+                                    {
+                                    <h1>Serviços Especiais</h1>
+                                    <p class="mb32">
+                                        Um serviço de transporte personalizado 365 dias por ano. Pegamos pontos já definidos fazendo um percurso, é feito em horários fixos destinados pelos nossos clientes para casamentos, batizados, aniversários, entre outros.Na organização de um evento, a velocidade são muito importantes para um bom resultado e com os resultados esperados. É por isso que o MORANDÉ TRANSPORTE & TURISMO, oferece o melhor serviço para eventos especiais, sendo alguns destes serviços: Casamentos
+
+                                        *Batismos
+
+                                        *Aniversarios
+
+                                        *Eventos em Geral
+                                    </p>
+                                        <a class="btn btn-lg btn-filled" href="/servicios-especiales/">Ler Mais</a>
+                                    }
+                                    else
+                                    {
+                                        <h1>Servicios Especiales</h1>
+                                        <p class="mb32">
+                                            Un servicios personalizado de transporte los 365 dias del año. Recogemos de puntos ya definidos realizando una ruta, se realiza en horarios fijos destinados por nuestros clientes para matrimonios, bautizos, cumpleaños, entre otros.
+                                        </p>
+                                        <a class="btn btn-lg btn-filled" href="/servicios-especiales/">Leer Más</a>
+                                    }
+
+                                </div>
+                            </div>
+                            <!--end of row-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="clearfix"></div>
+        </div><div id="shapely_home_parallax-7" class="widget shapely_home_parallax">
+            <section class="bg-secondary pb0 border-bottom">
+                <div class="container">
+
+                    <div class="row">
+
+
+                        <div class="col-sm-10 col-sm-offset-1 text-center">
+                            @if (TempData["idioma"].ToString() == "pt")
+                            {
+                            <h3>Nossa Frota</h3>
+                            <p class="mb32">
+                                Pensando em satisfazer as necessidades de nossos passageiros, temos uma frota que atende a todos os padrões de segurança exigidos pelos nossos clientes. Além de prestar atenção personalizada e a melhor qualidade.
+                                São utilizados novos modelos de Mercedes Benz, Hyundai, Nissan e Ford. Temos ônibus modernos, e serviço especial e ônibus de turismo de modelos recentes, equipados com ar condicionado e mais para seu conforto e satisfaçao.
+                            </p>
+                                <a class="btn btn-lg btn-filled" href="/flota/">Leer Más</a>
+                            }
+                            else
+                            {
+                                <h3>Nuestra Flota</h3>
+                                <p class="mb32">
+                                    Cuentan con las normativas exigidas por el ministerio de transporte. Contamos con seguro de pasajeros, seguro conductor y seguro de vehículos.
+                                </p>
+                                <a class="btn btn-lg btn-filled" href="/flota/">Leer Más</a>
+                            }
+                        </div>
+                       
+                        <!--end of row-->
+                        <div class="">
+                            <img class="cast-shadow img-responsive" alt="Nuestra Flota"
+                                 src="~/wp-content/uploads/2018/03/flota.jpeg">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="clearfix"></div>
+        </div><div id="shapely_home_cfa-3" class="widget shapely_home_CFA">
+            <section class="cfa-section bg-secondary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 text-center p0">
+                            <div class="overflow-hidden">
+                                <div class="col-sm-9">
+                                    <h3 class="cfa-text">¿Quieres contactarte con nosotros?</h3>
+                                </div>
+                                <div class="col-sm-3">
+                                    <a href="/contacto/"
+                                       alt="¿Quieres contactarte con nosotros?"
+                                       class="mb0 btn btn-lg btn-filled cfa-button">contactar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+        </div>
+
+
+    </div><!-- #main -->
+</section><!-- section -->

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMantenedorReservas"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.MyApp.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/dateBuscarReservaDesde"
+                    android:layout_width="0dip"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/dateBuscarReservaDesdeValor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:focusable="false"
+                        android:maxLines="1"
+                        android:clickable="true"
+                        android:hint="Desde" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/dateBuscarReservaHasta"
+                    android:layout_width="0dip"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/dateBuscarReservaHastaValor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:focusable="false"
+                        android:maxLines="1"
+                        android:clickable="true"
+                        android:hint="Hasta" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <ListView
+                android:id="@+id/listReservas"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabNuevaReserva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_marginMantenedores"
+            android:src="@drawable/baseline_add_circle_24" />
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

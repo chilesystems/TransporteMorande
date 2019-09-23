@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+      android:id="@+id/menuReservaEditar"
+      android:title="Editar"
+      android:icon="@drawable/icon_edit"
+      app:showAsAction="ifRoom" /> 
+  <item
+      android:id="@+id/menuReservaCancelar"
+      android:title="Cancelar Reserva"
+      android:icon="@drawable/icon_cancelar"
+      app:showAsAction="ifRoom" />
+</menu> 
+ 

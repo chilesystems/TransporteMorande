@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a62fce3f45c0446a9e5f113626040de7" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="appmorandeModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.AspNetRoles" Width="1.5" PointX="1.5" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.AspNetUserClaims" Width="1.5" PointX="6" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.AspNetUserLogins" Width="1.5" PointX="6" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.AspNetUsers" Width="1.5" PointX="3.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Cliente" Width="1.5" PointX="3.75" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Comision" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.DetalleLiquidacion" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Habitacion" Width="1.5" PointX="6" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Hotel" Width="1.5" PointX="3.75" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Idioma" Width="1.5" PointX="1.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Liquidacion" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Pais" Width="1.5" PointX="1.5" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Servicio" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Slider" Width="1.5" PointX="2.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Ticket" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="appmorandeModel.Domicilio" Width="1.5" PointX="3.75" PointY="33.25" IsExpanded="true" />
+        <AssociationConnector Association="appmorandeModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Liquidaci__IdUsu__3F115E1A" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Liquidaci__IdVen__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Cliente__IdIdiom__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Cliente__IdPais__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK_Domicilio_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Comision__IdServ__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__DetalleLi__IdLiq__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Habitacio__IdHot__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.FK__Ticket__IdServic__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="appmorandeModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="appmorandeModel.Reserva" Width="1.5" PointX="6" PointY="13" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdUsuar__3F466844" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdClien__3C69FB99" />
+        <AssociationConnector Association="appmorandeModel.FK__DetalleLi__IdRes__38996AB5" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdServi__3E52440B" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

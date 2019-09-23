@@ -1,0 +1,59 @@
+﻿<section class="content-area  pt0 ">
+    <div id="main" class="container" role="main">
+        <div class="row">
+            <div id="primary" class="col-md-12 mb-xs-24 full-width">
+                <article id="post-1988" class="post-content post-grid-wide">
+                    <header class="entry-header nolist"></header><!-- .entry-header -->
+                    <div class="entry-content">
+                        <h2 class="post-title">
+                            <a href="/contacto/">Contacto</a>
+                            
+                        </h2>
+                        <h3>@Model</h3>
+                        <div class="entry-meta">
+
+                        </div>
+                    </div>
+
+                    <div class="shapely-content ">
+                        <p><img class="aligncenter size-full wp-image-2189" alt="" width="1280" height="579" srcset="/wp-content/uploads/2017/02/contacto.jpg 1280w, /wp-content/uploads/2017/02/contacto-300x136.jpg 300w, /wp-content/uploads/2017/02/contacto-768x347.jpg 768w, /wp-content/uploads/2017/02/contacto-1024x463.jpg 1024w" sizes="(max-width: 1280px) 100vw, 1280px" /></p>
+                        <div id='contact-form-1988'>
+                            @using (Html.BeginForm("Index", "contacto", FormMethod.Post, new { @class= "contact-form commentsblock" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div>
+                                    <label for='g1988-nombre' class='grunion-field-label name'>Nombre<span>(requerido)</span></label>
+                                    <input type='text' name='Nombre' id='g1988-nombre' value='' class='name' required aria-required='true' />
+                                </div>
+
+                                <div>
+                                    <label for='g1988-correoelectrnico' class='grunion-field-label email'>Correo electrónico<span>(requerido)</span></label>
+                                    <input type='email' name='Email' id='g1988-correoelectrnico' value='' class='email' required aria-required='true' />
+                                </div>
+
+                                <div>
+                                    <label for='g1988-telfono' class='grunion-field-label text'>Teléfono</label>
+                                    <input type='text' name='Telefono' id='g1988-telfono' value='' class='text' />
+                                </div>
+
+                                <div>
+                                    <label for='contact-form-comment-g1988-mensaje' class='grunion-field-label textarea'>Mensaje<span>(requerido)</span></label>
+                                    <textarea name='Mensaje' id='contact-form-comment-g1988-mensaje' rows='20' class='textarea' required aria-required='true'></textarea>
+                                </div>
+                                <div class="g-recaptcha" data-sitekey="6LeQ8VAUAAAAABUJ6NfKZI_V1e_F4e4rq5XjgI90"></div>
+                                <p class='contact-submit'>
+                                    <input type='submit' value='Enviar &#187;' class='pushbutton-wide' />
+                                    <input type='hidden' name='contact-form-id' value='1988' />
+                                    <input type='hidden' name='action' value='grunion-contact-form' />
+                                </p>
+                                
+                            }
+                        </div>
+                    </div>
+            <!-- .entry-content -->
+            </article>
+        </div><!-- #primary -->
+    </div>
+
+        </div>
+</section>

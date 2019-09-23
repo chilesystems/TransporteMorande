@@ -1,0 +1,609 @@
+﻿@model TransporteMorande.Models.UsuariosViewModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+
+}
+@section Styles
+{
+    <link href="../plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />
+    <link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../plugins/bower_components/dropify/dist/css/dropify.min.css">
+    <link href="../plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">    
+}
+
+<div class="row bg-title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h4 class="page-title">Mantenedor de Usuarios</h4>
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <a href="javascript: void(0);" target="_blank" id="nuevoUsuario" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">NUEVO USUARIO</a>
+        <ol class="breadcrumb">
+            <li><a href="#">Mantenedores</a></li>
+            <li class="active">Usuarios</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Criterios de búsqueda
+            </div>
+            @using (Html.BeginForm("Index", "Usuarios", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "form_enviar" }))
+            {
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h6>Perfil</h6>
+                                @Html.DropDownListFor(x => x.PerfilSeleccionado, Model.Perfiles, new { @class = "selectpicker m-b-20", data_style = "btn-default btn-outline", @id = "perfilSeleccionado" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><button type="submit" id="filtrarUsuarios" class="btn btn-success" value="Filtrar">Filtrar</button> </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="white-box">
+            @*<h3 class="box-title">Servicios de Turismo</h3>*@
+            <div class="scrollable">
+                <div class="table-responsive">
+                    <table id="tablaUsuarios" class="table m-t-30 table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>RUT</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>E-mail</th>
+                                <th>Rol</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.Usuarios)
+                            {
+                                <tr>
+                                    <td width="60"><img src="@(string.IsNullOrEmpty(a.Imagen) ? "../plugins/images/perfilestandar.jpg" : a.Imagen)" class="img-circle" width="30" /></td>
+                                    <td>@a.Rut</td>
+                                    <td>@a.Nombre</td>
+                                    <td>@a.Apellido</td>
+                                    <td>@a.Email</td>
+                                    <td><span class="label @(Model.Roles.FirstOrDefault(x => x.Id == a.Roles.ToList()[0].RoleId).Name == "Administrador" ? "label-danger" : (Model.Roles.FirstOrDefault(x => x.Id == a.Roles.ToList()[0].RoleId).Name == "Vendedor" ? "label-info" : "label-warning"))">@Model.Roles.First(x => x.Id == a.Roles.ToList()[0].RoleId).Name</span></td>
+                                    <td>
+                                        <button type="button" value="@a.Id" onclick="modificar(value);" title='Modificar' class='btn btn-sm btn-icon btn-pure btn-outline jsgrid-edit-button trigger-modal-edit' data-toggle="tooltip" data-original-title="Modificar"><i class="ti-pencil" aria-hidden="true"></i></button>
+                                        <button type="button" value="@a.Id" onclick="consultaEliminar(value);" data-toggle="tooltip" data-original-title="Eliminar" class='btn btn-sm btn-icon btn-pure btn-outline trigger-modal-delete'><i class="ti-close" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="ModalNuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="white-box">
+                    @using (Ajax.BeginForm("", "", new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "idMensaje",
+                        LoadingElementId = "loader2",
+                        HttpMethod = "Post"
+                    }, new { @class = "form-horizontal form-material", enctype = "multipart/form-data", @id = "form_enviarNuevo" }))
+                    {
+                    <h3 class="box-title m-b-0">Nuevo Usuario</h3>
+                    <small>Transportes Morandé</small>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group m-t-20">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Rut" id="Rut" type="text" required="" placeholder="Rut" />
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Nombre" id="Nombre" type="text" required="" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Apellido" id="Apellido" type="text" required="" placeholder="Apellidos">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Email" id="Email" type="email" required="" placeholder="E-mail">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Password" id="Password" type="password" required="" placeholder="Contraseña">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="Password2" id="Password2" oninput="check(this)" type="password" required="" placeholder="Confirmar Contraseña">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input id="nuevoUsuarioImagen" type="file" name="imagen" class="dropify" data-default-file="../plugins/images/perfilestandar.jpg">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-primary p-t-0">
+                                        <input type="checkbox" name="Android" id="idAndroid" value="True" />
+                                        <label for="Android"> Acceso a aplicación Android</label>
+                                    </div>
+                                </div>
+                            </div>
+                            Perfil:
+                            @Html.DropDownListFor(x => x.RolId, Model.PerfilesNuevoUsuario, new { @class = "selectpicker m-b-20", data_style = "btn-default btn-outline", @id = "RolId" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center m-t-20">
+                        <div class="col-xs-12">
+                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Crear usuario</button>
+                        </div>
+                    </div>
+
+                    <div id="idMensaje">
+
+                    </div>
+                    <div id="loader2" class=" aletr" style="display:none">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+
+                    }
+                </div>
+
+                @*@Html.Partial("../Shared/Mensaje", new TransporteMorande.Models.App.MensajeViewModel())*@
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="white-box">
+                    @using (Ajax.BeginForm("", "", new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "idMensaje3",
+                        LoadingElementId = "loader3",
+                        HttpMethod = "POST"
+                    }, new { @class = "form-horizontal form-material", enctype = "multipart/form-data", @id = "form_enviarEditar" }))
+                    {
+                        <h3 class="box-title m-b-0">Modificar Usuario</h3>
+                        <small>Transportes Morandé</small>
+                        <div class="row">
+                            <input type="hidden" name="Id" id="IdModificarUsuario" />
+                            <div class="col-md-6">
+                                <div class="form-group m-t-20">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" name="Rut" id="RutModificar" type="text" required="" placeholder="Rut" />
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" name="Nombre" id="NombreModificar" type="text" required="" placeholder="Nombre">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" name="Apellido" id="ApellidoModificar" type="text" required="" placeholder="Apellidos">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-xs-12">
+                                        <input class="form-control" name="Email" id="EmailModificar" type="email" required="" placeholder="E-mail">
+                                    </div>
+                                </div>
+                                Perfil:
+                                @Html.DropDownList("RolIdModificar", Model.PerfilesNuevoUsuario, new { @class = "selectpicker m-b-20", data_style = "btn-default btn-outline", @id = "RolIdModificar", @name = "RolIdModificar" })
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input id="nuevoUsuarioImagenModificar" type="file" name="imagen" class="dropify" >
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="checkbox checkbox-primary p-t-0">
+                                            <input type="checkbox" name="Android" id="idAndroidModificar" value="true" />
+                                            <label for="Android"> Acceso a aplicación Android</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center m-t-20">
+                            <div class="col-xs-12">
+                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Modificar usuario</button>
+                            </div>
+                        </div>
+
+                        <div id="idMensaje3">
+
+                        </div>
+                        <div id="loader3" class=" aletr" style="display:none">
+                            <svg class="circular" viewBox="25 25 50 50">
+                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                            </svg>
+                        </div>
+
+                    }
+
+                </div>
+
+
+                @*@Html.Partial("../Shared/Mensaje", new TransporteMorande.Models.App.MensajeViewModel())*@
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="white-box">
+                    <div id="loader3" class=" aletr" style="display:none">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+                </div>
+
+
+                @*@Html.Partial("../Shared/Mensaje", new TransporteMorande.Models.App.MensajeViewModel())*@
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @*<script src="../plugins/bower_components/footable/js/footable.all.min.js"></script>*@
+    <script src="../plugins/bower_components/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="../plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/bower_components/dropify/dist/js/dropify.min.js"></script>
+    @*<script src="js/footable-init.js"></script>
+        <script src="../plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>*@
+    <script>
+
+
+        $('#nuevoUsuario').click(function () {
+            $('#ModalNuevoUsuario').modal();
+        });
+
+
+        function modificar(id) {
+            $.ajax({
+                type: "POST",
+                url: '/Usuarios/Obtener',
+                data: { id: id },
+                cache: false,
+                dataType: "html",
+                success: function (response) {
+                    var data = $.parseJSON(response);
+                    $('#IdModificarUsuario').val(id);
+                    $('#RutModificar').val(data.rut);
+                    $('#NombreModificar').val(data.nombre);
+                    $('#ApellidoModificar').val(data.apellido);
+                    $('#EmailModificar').val(data.email);
+
+                    $('select[name=RolIdModificar]').val(data.rolid);
+                    $('.selectpicker').selectpicker('refresh');
+                    if (data.android) {
+                        $("#idAndroidModificar").prop('checked', true);
+                    }
+                    else {
+                        $("#idAndroidModificar").prop('checked', false);
+                    }
+                    var imagenUrl = "";
+                    if (data.imagen != "")
+                        imagenUrl = data.imagen;
+                    else imagenUrl = "../plugins/images/perfilestandar.jpg";
+
+                    try {
+                        var drEvent = $('#nuevoUsuarioImagenModificar').dropify(
+                            {
+                                defaultFile: imagenUrl,
+                                messages: {
+                                    default: 'Mensaje default',
+                                    replace: 'Arrastre o haga click para reemplazar',
+                                    remove: 'Eliminar',
+                                    error: 'Ocurrió un error'
+                                }
+                            });
+                        drEvent = drEvent.data('dropify');
+                        drEvent.resetPreview();
+                        drEvent.clearElement();
+                        drEvent.settings.defaultFile = imagenUrl;
+                        drEvent.destroy();
+                        drEvent.init();
+                    }
+                    catch (err)
+                    {
+                        console.log(err);
+                    }
+
+                    $('#ModalEditarUsuario').modal();
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+
+        function cerrarAlerta() {
+            $('#filtrarUsuarios').click();
+            $("#ModalNuevoUsuario").modal("hide");
+        }
+
+        function check(input) {
+            if (input.value != document.getElementById('Password').value) {
+                input.setCustomValidity('Las contraseñas no coinciden');
+            } else {
+                // input is valid -- reset the error message
+                input.setCustomValidity('');
+            }
+        }
+
+
+        $('#form_enviarEditar').on('submit', function (e) {
+            var valor = $('#idAndroid').is(':checked');
+            if ($("#idAndroidModificar:checked")) {
+                $("#idAndroidModificar:checked").val(true);
+            } else {
+                $("#idAndroidModificar:checked").val(false);
+            }
+            var formdata = new FormData();
+            var getfile = document.getElementById('nuevoUsuarioImagenModificar');
+            for (i = 0; i < getfile.files.length; i++) {
+                formdata.append(getfile.files[i].name, getfile.files[i]);
+            }
+            var model = {
+                Rut: $("#RutModificar").val(),
+                Nombre: $("#NombreModificar").val(),
+                Apellido: $("#ApellidoModificar").val(),
+                Email: $("#EmailModificar").val(),
+                Android: $("#idAndroidModificar").val(),
+                RolIdModificar: $("#RolIdModificar").val(),
+                Id: $("#IdModificarUsuario").val()
+            };
+            $.ajax(
+                {
+                    //Save Main Form Data
+                    url: '/Usuarios/Modificar/',
+                    type: "Post",
+                    async: false,
+                    dataType: "json",
+                    data: model,
+                    success: function (resultado) {
+                        //console.log(resultado);
+                        if (resultado.Error) {
+                            $("#idMensaje3").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + resultado.Retorno + "</div>");
+
+                        }
+                        else {
+                            formdata.append("id", $("#IdModificarUsuario").val());
+                            formdata.append("tipo", "Modificacion");
+                            $.ajax({
+                                url: '/Usuarios/SubirImagen',
+                                data: formdata,
+                                contentType: false,
+                                processData: false,
+                                async: false,
+                                type: 'POST',
+                                success: function (data) {
+                                    $("#idMensaje3").html(data);
+                                },
+                                error: function (result) {
+                                    console.log(result);
+                                }
+                            });
+                        }
+                    },
+                    error: function (result)
+                    {
+                        console.log(result);
+                    }
+                });
+            return true;
+        });
+
+        $('#form_enviarNuevo').on('submit', function (e) {
+            var valor = $('#idAndroid').is(':checked');
+            if ($("#idAndroid:checked")) {
+                $("#idAndroid:checked").val(true);
+            } else {
+                $("#idAndroid:checked").val(false);
+            }
+            var formdata = new FormData();
+            var getfile = document.getElementById('nuevoUsuarioImagen');
+            for (i = 0; i < getfile.files.length; i++) {
+                formdata.append(getfile.files[i].name, getfile.files[i]);
+            }
+            var model = {
+                Rut: $("#Rut").val(),
+                Nombre: $("#Nombre").val(),
+                Apellido: $("#Apellido").val(),
+                Email: $("#Email").val(),
+                Android: $("#idAndroid").val(),
+                Password: $("#Password").val(),
+                RolId: $("#RolId").val()
+            };
+            $.ajax(
+                {
+                    //Save Main Form Data
+                    url: '/Usuarios/Nuevo/',
+                    type: "Post",
+                    async: false,
+                    dataType: "json",
+                    data: model,
+                    success: function (resultado) {
+                        console.log(resultado);
+                        if (resultado.Error) {
+                            $("#idMensaje").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + resultado.Retorno + "</div>");
+                        }
+                        else
+                        {
+                            formdata.append("id", resultado.Retorno);
+                            formdata.append("tipo", "Creacion");
+                            $.ajax({
+                                url: '/Usuarios/SubirImagen',
+                                data: formdata,
+                                contentType: false,
+                                processData: false,
+                                async: false,
+                                type: 'POST',
+                                success: function (data) {
+                                    $("#idMensaje").html(data);
+                                },
+                                error: function (result) {
+                                    console.log(result);
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (result) {
+                        console.log(result);
+                    }
+                });
+            return true;
+        });
+
+    $(document).ready(function () {
+        $('#nuevoUsuarioImagen').dropify(
+
+            {
+                messages: {
+                    default: 'Mensaje default',
+                    replace: 'Arrastre o haga click para reemplazar',
+                    remove: 'Eliminar',
+                    error: 'Ocurrió un error'
+                }
+            });
+        $('#tablaUsuarios').DataTable(
+        {
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "Búsqueda sin resultados",
+                    "info": "Página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar:",
+                    "first": "Primera página",
+                    "paginate": {
+                        "previous": "Anterior",
+                        "next": "Siguiente"
+                    }
+                },
+                "paging": true,
+                "info": false,
+                "ordering": false,
+                "pageLength": 5,
+                "lengthMenu": [5, 10, 25]
+        });
+    });
+
+
+        function consultaEliminar(id) {
+            swal({
+                title: "¿Estás seguro?",
+                text: "El usuario ya no tendrá acceso a la aplicación",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                allowOutsideClick: false,
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return new Promise(function (resolve, reject) {
+                        $.ajax({
+                            success: function (response) {
+                                resolve(response)
+                            },
+                            error: function (a, b, c) {
+                                reject("error message")
+                            }
+                        })
+                    })
+                }
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("EliminarUsuario", "Usuarios")',
+                            data: { id: id },
+                            cache: false,
+                            dataType: "json",
+                            success: function (response) {
+                                console.log(response);
+                                if (response == "Exito") {
+                                    swal("Usuario eliminado", "", "success");
+                                    setTimeout(function () {
+                                        $('#filtrarUsuarios').click();
+                                    }, 2500);
+
+                                }
+                                else {
+                                    swal("Ocurrió un error", "Contáctese con el administrador", "error");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        swal("Operación cancelada", "El usuario puede continuar ingresando a la aplicación", "error");
+                    }
+                });
+        }
+
+    </script>
+    <script src="../plugins/bower_components/custom-select/custom-select.min.js" type="text/javascript"></script>
+    <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+
+}

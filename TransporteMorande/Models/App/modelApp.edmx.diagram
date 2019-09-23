@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cf1c4510d894eba99db8f096461cb2c" Name="Diagram1" ZoomLevel="64" >
+        <EntityTypeShape EntityType="appmorandeModel.Slider" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="appmorandeModel.Cliente" Width="1.5" PointX="3.125" PointY="10.125" />
+        <EntityTypeShape EntityType="appmorandeModel.Habitacion" Width="1.5" PointX="3" PointY="6.125" />
+        <EntityTypeShape EntityType="appmorandeModel.Hotel" Width="1.5" PointX="0.75" PointY="6.25" />
+        <AssociationConnector Association="appmorandeModel.FK__Habitacio__IdHot__66603565" />
+        <EntityTypeShape EntityType="appmorandeModel.AspNetUsers" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="appmorandeModel.Idioma" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="appmorandeModel.Pais" Width="1.5" PointX="9.375" PointY="0.75" />
+        <AssociationConnector Association="appmorandeModel.FK__Cliente__IdIdiom__70DDC3D8" />
+        <AssociationConnector Association="appmorandeModel.FK__Cliente__IdPais__71D1E811" />
+        <EntityTypeShape EntityType="appmorandeModel.Comision" Width="1.5" PointX="9.625" PointY="13.375" />
+        <EntityTypeShape EntityType="appmorandeModel.Ticket" Width="1.5" PointX="9.625" PointY="17.125" />
+        <EntityTypeShape EntityType="appmorandeModel.Servicio" Width="1.5" PointX="7.375" PointY="10.25" />
+        <AssociationConnector Association="appmorandeModel.FK__Comision__IdServ__160F4887" />
+        <AssociationConnector Association="appmorandeModel.FK__Ticket__IdServic__2BFE89A6" />
+        <EntityTypeShape EntityType="appmorandeModel.DetalleLiquidacion" Width="1.5" PointX="11.875" PointY="12.625" />
+        <EntityTypeShape EntityType="appmorandeModel.Liquidacion" Width="1.5" PointX="9.625" PointY="20.125" />
+        <AssociationConnector Association="appmorandeModel.FK__Liquidaci__IdUsu__3F115E1A" />
+        <AssociationConnector Association="appmorandeModel.FK__DetalleLi__IdLiq__37A5467C" />
+        <AssociationConnector Association="appmorandeModel.FK__Liquidaci__IdVen__47DBAE45" />
+        <EntityTypeShape EntityType="appmorandeModel.Domicilio" Width="1.5" PointX="5.375" PointY="14.75" />
+        <AssociationConnector Association="appmorandeModel.FK_Domicilio_Cliente" />
+        <EntityTypeShape EntityType="appmorandeModel.Reserva" Width="1.5" PointX="9.625" PointY="4.625" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdUsuar__3F466844" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdClien__3C69FB99" />
+        <AssociationConnector Association="appmorandeModel.FK__DetalleLi__IdRes__38996AB5" />
+        <AssociationConnector Association="appmorandeModel.FK__Reserva__IdServi__3E52440B" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

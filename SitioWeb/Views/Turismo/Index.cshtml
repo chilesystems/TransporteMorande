@@ -1,0 +1,85 @@
+﻿@model List<SitioWeb.Models.Servicio>
+<section class="content-area  pt0 ">
+    <div id="main" class="container"
+         role="main">
+        <div class="row">
+            <div id="primary" class="col-md-12 mb-xs-24 full-width">
+                <article id="post-1972" class="post-content post-grid-wide">
+                    <header class="entry-header nolist"></header><!-- .entry-header -->
+                    <div class="entry-content">
+                        <h2 class="post-title">
+                            <a href="/turismo/">Turismo</a>
+                        </h2>
+
+                        <div class="entry-meta">
+
+                        </div>
+                    </div>
+
+                    <div class="shapely-content ">
+                        @foreach (var a in Model)
+                        {
+
+                            <h4>
+                                <a href="/contacto">
+                                    <img class="alignleft size-full" src="@a.Imagen" width="420" height="300" />
+                                </a>
+                                <strong>@a.Titulo</strong>
+                            </h4>
+                            if (TempData["idioma"].ToString() == "pt")
+                            {
+                                <p>@a.ContenidoPortugues</p>
+                            }
+                            else
+                            {
+                                <p>@a.Contenido</p>
+                            }
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="NKSWT5PU33RW8">
+                                        <table>
+                                            <tr><td><input type="hidden" name="on0" value="Opçoes de Tour">Opçoes de Tour</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <select name="os0">
+                                                        <option value="City Tour Santiago">City Tour Santiago $30,00 USD</option>
+                                                        <option value="Viña Undurraga">Viña Undurraga $39,00 USD</option>
+                                                        <option value="Cajon Y Embalse">Cajon Y Embalse $54,00 USD</option>
+                                                        <option value="Bali Hai">Bali Hai $85,00 USD</option>
+                                                        <option value="Viña Santa Rita">Viña Santa Rita $46,00 USD</option>
+                                                        <option value="Cajon Y Termas">Cajon Y Termas $85,00 USD</option>
+                                                        <option value="Vina del Mar y Valparaiso">Vina del Mar y Valparaiso $43,00 USD</option>
+                                                        <option value="Isla Negra + Pomaire">Isla Negra + Pomaire $77,00 USD</option>
+                                                        <option value="Concha Y Toro">Concha Y Toro $39,00 USD</option>
+                                                        <option value="Valle Nevado + Farellones">Valle Nevado + Farellones $30,00 USD</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <input type="hidden" name="currency_code" value="USD">
+                                        <input type="image" src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, la forma rápida y segura de pagar en Internet.">
+                                        <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+                                    </form>
+                                </div>
+                                <div class="col-md-6 pull-right">
+                                    <p style="text-align: right;">
+                                        <a href=" http://www.transportemorande.cl/contacto" class="medium otw-orange radius otw-button" target="_blank">
+                                            <i class="general foundicon-mail"></i>$ @a.Precio P/P* &#8211; Reservar
+                                        </a>
+                                    </p>
+                                </div>
+
+                            </div>
+                            <br />
+                            <hr />
+                        }
+                    </div>
+           
+            </article>
+        </div><!-- #primary -->
+    </div>
+        </div>
+    </section>

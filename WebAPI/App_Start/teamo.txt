@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using System.Net.Http.Headers;
+
+namespace WebAPI
+{
+    public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            // Configuración y servicios de API web
+
+            // Rutas de API web
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+        }
+    }
+}
+Gravedad	Código	Descripción	Proyecto	Archivo	Línea	Estado suprimido
+Error		El paquete Xamarin.Android.Support.v7.AppCompat 27.0.2.1 no es compatible con monoandroid71 (MonoAndroid,Version=v7.1). El paquete Xamarin.Android.Support.v7.AppCompat 27.0.2.1 admite: monoandroid81 (MonoAndroid,Version=v8.1)			0	

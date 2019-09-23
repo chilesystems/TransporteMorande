@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarDetalleCliente"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.MyApp.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:layout_margin="@dimen/card_margin">
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Datos personales"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <TextView
+                        android:paddingTop="@dimen/margenFormulario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/formularioTextoTitulo"
+                        android:text="Nombre Completo" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/formularioTextoContenido"
+                        android:textColor="#111111"
+                        android:paddingBottom="@dimen/margenFormulario"
+                        android:id="@+id/textClienteNombreCompleto" />
+                    <TextView
+                        android:paddingTop="@dimen/margenFormulario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="E-mail"
+                        android:textSize="@dimen/formularioTextoTitulo" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textClienteEmail"
+                        android:textColor="#111111"
+                        android:textSize="@dimen/formularioTextoContenido" />
+                    <LinearLayout
+                        android:paddingTop="@dimen/margenFormulario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_weight=".5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoTitulo"
+                                android:text="Teléfono 1" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoContenido"
+                                android:textColor="#111111"
+                                android:id="@+id/textClienteTelefono" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_weight=".5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoTitulo"
+                                android:text="Teléfono 2" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoContenido"
+                                android:textColor="#111111"
+                                android:id="@+id/textClienteCelular" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:paddingTop="@dimen/margenFormulario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_weight=".5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoTitulo"
+                                android:text="País" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textClientePais"
+                                android:textSize="@dimen/formularioTextoContenido"
+                                android:textColor="#111111" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_weight=".5"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/formularioTextoTitulo"
+                                android:text="Idioma" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textClienteIdioma"
+                                android:textSize="@dimen/formularioTextoContenido"
+                                android:textColor="#111111" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="@color/primary_material_light"
+                android:background="@color/background_material_light"
+                android:layout_margin="@dimen/card_margin">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Información general"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

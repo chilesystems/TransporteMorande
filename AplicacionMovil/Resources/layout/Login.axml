@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px"
+    android:paddingTop="120px"
+    android:backgroundTint="@android:color/holo_blue_dark"
+    android:background="#ff104dd5">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView1"
+        android:scaleType="centerInside"
+        android:src="@drawable/logoMorande"
+        android:adjustViewBounds="true"
+        android:maxHeight="350px" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textRUT"
+        android:paddingTop="50px"
+        android:minWidth="350px"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        android:hint="Correo electrónico"
+        android:singleLine="true"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="#ff0000ff"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:id="@+id/textPassword"
+        android:layout_gravity="center_horizontal"
+        android:minWidth="350px"
+        android:hint="Password"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:backgroundTint="#ff0000ff" />
+    <Button
+        android:text="Entrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/botonEntrar"
+        android:minWidth="500px"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_blue_light"
+        android:layout_marginTop="27.5dp" />
+</LinearLayout>

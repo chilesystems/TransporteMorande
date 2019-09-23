@@ -1,0 +1,12 @@
+﻿@model TransporteMorande.Models.App.MensajeViewModel
+
+@{ 
+    string clase = "alert-success";
+    if (Model.Error)
+    {
+        clase = "alert-danger";
+    }
+}
+        <div class="alert @clase alert-dismissable">
+            <button type="button" @(Model.Error ? "" : "onclick=cerrarAlerta()")  class="close" data-dismiss="alert" aria-hidden="true">×</button> @Model.Mensaje
+        </div>

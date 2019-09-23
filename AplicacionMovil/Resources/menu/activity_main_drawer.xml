@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+  <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_reservas"
+        android:icon="@drawable/baseline_book_black_36dp"
+        android:title="Mis reservas" />
+    <item
+        android:id="@+id/nav_liquidaciones"
+        android:icon="@drawable/baseline_format_list_bulleted_black_36dp"
+        android:title="Mis liquidaciones" />
+  </group>
+
+  <item android:title="Mantenedores">
+    <menu>
+      <item
+          android:id="@+id/nav_clientes"
+          android:icon="@drawable/baseline_people_black_36dp"
+          android:title="Clientes" />
+      <item
+          android:id="@+id/nav_servicios"
+          android:icon="@drawable/baseline_room_service_black_36dp"
+          android:title="Servicios" />
+    </menu>
+  </item>
+
+  <item android:title="ChileSystems">
+    <menu>
+      <item
+         android:id="@+id/nav_Sincronizar"
+         android:icon="@drawable/icon_sincronizar"
+         android:title="Sincronizar" />
+      <item
+        android:id="@+id/nav_AcercaDe"
+        android:title="Acerca De"
+        android:icon="@drawable/icon_about" />
+    </menu>
+  </item>
+
+</menu>

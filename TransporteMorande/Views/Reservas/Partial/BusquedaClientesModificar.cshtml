@@ -1,0 +1,39 @@
+﻿@model List<TransporteMorande.Models.App.Cliente>
+<table class="table table-striped" id="tableSearchMaestro">
+    @if (Model.Any())
+    {
+    <thead>
+        <tr>
+            <th>Nombre Completo</th>
+            <th align="right">Seleccionar</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NombreCompleto</td>
+                <td>
+                    <button class="btn btn-sm btn-success" value="@item.Id" type="button" title="Seleccionar" onclick="clienteSeleccionadoModificar(this.value);">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+    }
+    else
+    {
+        <label>
+            Búsqueda sin resultados
+        </label>
+    }
+</table>
+
+
+
+
+

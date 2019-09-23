@@ -1,0 +1,455 @@
+﻿@model TransporteMorande.Models.App.PerfilViewModel
+@using TransporteMorande.Extensions
+
+
+@section Styles
+{
+    <link href="~/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/bower_components/dropify/dist/css/dropify.min.css">
+    <link href="~/plugins/bower_components/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="~/plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    @*<link href="../plugins/bower_components/chartist-js/dist/chartist.min.css" rel="stylesheet">*@
+    @*<link href="../plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">*@
+}
+<div class="row bg-title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h4 class="page-title">Mi Perfil</h4>
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        @*<a href="javascript: void(0);" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Buy Admin Now</a>*@
+        <ol class="breadcrumb">
+            <li><a href="#">Aplicación</a></li>
+            <li class="active">Perfil de Usuario</li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+<!-- .row -->
+<div class="row">
+    <div class="col-md-4 col-xs-12">
+        <div class="white-box">
+            @*<div class="user-bg">
+                       <img width="100%" alt="user" src="../plugins/images/large/img1.jpg">
+                <div >
+                    <div class="user-content">
+                        <a href="javascript:void(0)"><img src="@(string.IsNullOrEmpty(User.Identity.GetImagen()) ? "../plugins/images/perfilestandar.jpg" : User.Identity.GetImagen())" class="thumb-lg img-circle" alt="img"></a>
+                        <h4 class="text-white">User Name</h4>
+                        <h5 class="text-white">info@myadmin.com</h5>
+                    </div>
+                </div>
+
+                </div>*@
+            <div class="white-box">
+                <div class="el-card-item">
+                    <div class="el-card-avatar el-overlay-1">
+                        <img style="width:100%" src="@(string.IsNullOrEmpty(User.Identity.GetImagen()) ? "../plugins/images/perfilestandar.jpg" : User.Identity.GetImagen())" />
+
+                    </div>
+                    <div class="el-card-content">
+                        <h3 class="box-title">@Model.Usuario.Nombre @Model.Usuario.Apellido</h3>
+                        <h4 class="box-label">@Model.Rol</h4>
+                        <small>@Model.Usuario.Rut</small>
+                        <br />
+                        <small>@Model.Usuario.Email</small>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            @*<div class="user-btm-box">
+
+                </div>*@
+        </div>
+    </div>
+    <div class="col-md-8 col-xs-12">
+        <div class="white-box">
+            <ul id="ulTabs" class="nav nav-tabs tabs customtab">
+                <li class="tab">
+                    <a href="#Panel" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Panel</span> </a>
+                </li>
+                <li class="tab">
+                    <a href="#MisVentas" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Mis Reservas</span> </a>
+                </li>
+                <li class="tab">
+                    <a href="#ViajesRealizados" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Mis Viajes Realizados</span> </a>
+                </li>
+                <li class="tab">
+                    <a href="#MisLiquidaciones" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Mis Liquidaciones</span> </a>
+                </li>
+                <li class="tab">
+                    <a href="#MisDatos" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Mis Datos</span> </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="Panel">
+                    <div class="white-box">
+                        <div class="row row-in">
+                            <div class="col-lg-4 col-sm-6 row-in-br">
+                                <ul class="col-in">
+                                    <li>
+                                        <span class="circle circle-md bg-info"><i class="ti-clipboard"></i></span>
+                                    </li>
+                                    <li class="col-last">
+                                        <h3 class="counter text-right m-t-15">@Model.ReservasPendientes</h3>
+                                    </li>
+                                    <li class="col-middle">
+                                        <h4>Reservas pendientes</h4>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-sm-6 row-in-br  b-r-none">
+                                <ul class="col-in">
+                                    <li>
+                                        <span class="circle circle-md bg-warning"><i class="ti-clipboard"></i></span>
+                                    </li>
+                                    <li class="col-last">
+                                        <h3 class="counter text-right m-t-15">@Model.ReservasConfirmadas</h3>
+                                    </li>
+                                    <li class="col-middle">
+                                        <h4>Reservas confirmadas</h4>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-sm-6  b-0">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="circle circle-md bg-danger"><i class="fa fa-dollar"></i></div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h2 class="m-b-0 font-medium">$@Model.TotalPendienteReservas.ToString("N0")</h2>
+                                        <h5 class="text-muted m-t-0">Dinero reservas pendientes</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white-box">
+                        <div class="row row-in">
+                            <div class="col-lg-8 col-sm-6 row-in-br">
+                                <ul class="col-in">
+                                    <li>
+                                        <span class="circle circle-md bg-warning"><i class="fa fa-file-pdf-o"></i></span>
+                                    </li>
+                                    <li class="col-last">
+                                        <h3 class="counter text-right m-t-15">@Model.CantidadLiquidacionesPendientes.ToString("N0")</h3>
+                                    </li>
+                                    <li class="col-middle">
+                                        <h4>Liquidaciones Pendientes</h4>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-sm-6 row-in-br  b-r-none">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="circle circle-md bg-danger"><i class="fa fa-dollar"></i></div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h2 class="m-b-0 font-medium">$@Model.TotalLiquidacionesPendientes.ToString("N0")</h2>
+                                        <h5 class="text-muted m-t-0">Liquidaciones pendientes de pago</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="MisVentas">
+
+                    <table id="demo-foo-accordion" class="table m-b-0 toggle-arrow-tiny">
+                        <thead>
+                            <tr>
+                                <th> Fecha </th>
+                                <th> Servicio </th>
+                                <th> Cliente </th>
+                                <th> Total </th>
+                                <th> Estado </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.Reservas)
+                            {
+                                <tr>
+                                    <td>@a.FechaSalida.ToShortDateString()</td>
+                                    <td>@a.Servicio.Titulo</td>
+                                    <td>@a.Cliente.NombreCompleto</td>
+                                    <td>@a.Total.ToString("N0")</td>
+                                    <td><span class="label label-table @(a.Estado == "Confirmada" ? "label-success" : "label-warning")">@a.Estado</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="ViajesRealizados">
+                    <table id="demo-foo-accordion" class="table m-b-0 toggle-arrow-tiny">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 100px;"> Fecha </th>
+                                <th> Servicio </th>
+                                <th> Cliente </th>
+                                <th> Total </th>
+                                <th style="min-width: 105px;"> Estado Pago</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.ViajesRealizados)
+                            {
+                                <tr>
+                                    <td>@a.FechaSalida.ToShortDateString()</td>
+                                    <td>@a.Servicio.Titulo</td>
+                                    <td>@a.Cliente.NombreCompleto</td>
+                                    <td>@a.Total.ToString("N0")</td>
+                                    <td><span class="label label-table @(a.EstadoPago == "Pagado" ? "label-success" : (a.EstadoPago == "Pendiente" ? "label-danger" : "label-warning"))">@a.EstadoPago</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="MisLiquidaciones">
+
+                    <table id="demo-foo-accordion" class="table m-b-0 toggle-arrow-tiny">
+                        <thead>
+                            <tr>
+                                <th> Fecha </th>
+                                <th> Estado  </th>
+                                <th> Total </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.Liquidaciones)
+                            {
+                            <tr>
+                                <td>@a.Fecha.ToShortDateString()</td>
+                                <td><span class="label label-table @(a.Estado == "Pagada" ? "label-success" : "label-danger")">@a.Estado</span></td>
+                                <td>@a.Monto.ToString("N0")</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="MisDatos">
+                    <form class="form-horizontal form-material">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-12">Rut</label>
+                                    <div class="col-md-12">
+                                        <input type="text" value="@Model.Usuario.Rut" readonly class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">E-mail</label>
+                                    <div class="col-md-12">
+                                        <input type="email" value="@Model.Usuario.Email" readonly class="form-control form-control-line">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Nombre Completo</label>
+                                    <div class="col-md-12">
+                                        <input type="text" value="@Model.Usuario.Nombre @Model.Usuario.Apellido" readonly class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Perfil</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control form-control-line" readonly value="@Model.Rol">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-12"></label>
+                                    <div class="col-sm-12 ">
+                                        <button class="btn btn-danger pull-left" id="btnCambiarPass" type="button">Cambiar Contraseña</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                    @*<div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-md-12">Cambiar password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-md-12">Confirmar password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalResetPass" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="white-box">
+                    @using (Ajax.BeginForm("ResetPassword", "Usuario", new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "mensajeModPass",
+                        LoadingElementId = "loaderModPass",
+                        HttpMethod = "Post"
+                    }, new { @class = "form-horizontal form-material" }))
+                    {
+                        <h3 class="box-title m-b-0">Modificar Contraseña</h3>
+                        <small>Transportes Morandé</small>
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <div class="form-group m-t-20">
+                                    <label class="col-xs-12">Nueva Password</label>
+                                    <div class="col-xs-12">
+                                        <input type="password" name="Password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-xs-12">Confirmar Password</label>
+                                    <div class="col-xs-12">
+                                        <input type="password" name="ConfirmPassword" class="form-control form-control-line">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center m-t-20">
+                            <div class="col-xs-12">
+                                <button id="botonResetPass" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Modificar</button>
+                            </div>
+                        </div>
+
+                        <div id="mensajeModPass">
+
+                        </div>
+                        <div id="loaderModPass" class=" aletr" style="display:none">
+                            <svg class="circular" viewBox="25 25 50 50">
+                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                            </svg>
+                        </div>
+
+                    }
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- Magnific popup JavaScript -->
+@section Scripts{
+    <script src="~/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+    <script src="~/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+    <script src="../plugins/bower_components/dropify/dist/js/dropify.min.js"></script>
+    <script src="../plugins/bower_components/chartist-js/dist/chartist.min.js"></script>
+    <script src="../plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <script>
+        function cerrarAlerta() {
+            $("#ModalResetPass").modal("hide");
+        }
+        //$('#botonResetPass').click(function () {
+
+        //    var model = {
+        //        Password: $("#passwordNew").val(),
+        //        ConfirmPassword: $("#passwordConfirmNew").val()
+        //    };
+        //    $.ajax(
+        //        {
+        //            url: '/Usuario/ResetPassword/',
+        //            type: "Post",
+        //            async: false,
+        //            dataType: "json",
+        //            data: model,
+        //            success: function (resultado) {
+        //                console.log(resultado);
+        //                $("#idMensaje").text(resultado);
+        //                //if (resultado.Error) {
+        //                //    //$("#idMensaje").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + resultado.Mensaje + "</div>");
+
+        //                //}
+        //                //else {
+        //                //    $("#idMensaje").html(data);
+        //                //}
+
+        //            },
+        //            error: function (result) {
+        //                console.log(result);
+        //            }
+        //        });
+        //    return true;
+        //});
+
+        $('#btnCambiarPass').click(function () {
+            $('#ModalResetPass').modal({
+
+            });
+        // backdrop: 'static',keyboard: false
+                        });
+
+        $(document).ready(function () {
+            $("#ulTabs a[href='#Panel']").trigger('click');
+                            //console.log('@Model.Usuario.Imagen');
+            @*$('#UsuarioImagenModificar').dropify(
+                {
+                    defaultFile: '@Model.Usuario.Imagen',
+                    messages: {
+                        default: 'Mensaje default',
+                        replace: 'Arrastre o haga click para reemplazar',
+                        remove: 'Eliminar',
+                        error: 'Ocurrió un error'
+
+                    }
+                });*@
+
+
+            //var imagenUrl = "";
+            //if (data.imagen != "")
+            //    imagenUrl = data.imagen;
+            //else imagenUrl = "../plugins/images/perfilestandar.jpg";
+
+            //try {
+            //    var drEvent = $('#nuevoUsuarioImagenModificar').dropify(
+            //        {
+            //            defaultFile: imagenUrl,
+            //            messages: {
+            //                default: 'Mensaje default',
+            //                replace: 'Arrastre o haga click para reemplazar',
+            //                remove: 'Eliminar',
+            //                error: 'Ocurrió un error'
+            //            }
+            //        });
+            //    drEvent = drEvent.data('dropify');
+            //    drEvent.resetPreview();
+            //    drEvent.clearElement();
+            //    drEvent.settings.defaultFile = imagenUrl;
+            //    drEvent.destroy();
+            //    drEvent.init();
+        });
+
+
+
+
+    </script>
+    <!-- chartist chart -->
+    @*<script src="../plugins/bower_components/chartist-js/dist/chartist.min.js"></script>*@
+    @*<script src="../plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>*@
+}

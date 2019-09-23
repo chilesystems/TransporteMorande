@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="40dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/formularioTextoTitulo"
+        android:textAlignment="center"
+        android:text="Más información - Deslice hacia arriba" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/formularioTextoTitulo"
+            android:paddingLeft="5dp"
+            android:text="Cliente" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/formularioTextoTitulo"
+            android:gravity="right"
+            android:text="Total" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/formularioTextoContenido"
+            android:textColor="#111111"
+            android:paddingBottom="@dimen/margenFormulario"
+            android:paddingLeft="5dp"
+            android:maxLines="2"
+            android:minLines="1"
+            android:id="@+id/textVentasResumenNombreCliente" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:textSize="21dp"
+            android:textColor="#111111"
+            android:gravity="right"
+            android:paddingBottom="@dimen/margenFormulario"
+            android:id="@+id/textVentasResumenTotal" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/formularioTextoTitulo"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Domicilio" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:id="@+id/spinnerResumenVentaDirecciones" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/formularioTextoTitulo"
+        android:paddingLeft="5dp"
+        android:text="Forma de Pago" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:id="@+id/spinnerResumenVentaFormaPago" />
+        <CheckBox
+            android:id="@+id/checkFacturable"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:text="Facturable" />
+    </LinearLayout>
+</LinearLayout>

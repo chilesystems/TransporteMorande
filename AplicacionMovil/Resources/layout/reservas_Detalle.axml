@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarDetalleReserva"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.MyApp.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:navigationIcon="?attr/homeAsUpIndicator" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                app:cardCornerRadius="9dp"
+                app:cardBackgroundColor="@color/primary_material_light"
+                android:background="@color/background_material_light"
+                android:layout_margin="@dimen/card_margin">
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Datos de la reserva"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha de Salida"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:id="@+id/textDetalleReservaResumenFechaSalida" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cliente"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:id="@+id/textDetalleReservaResumenNombreCliente" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Servicio"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:id="@+id/textDetalleReservaResumenNombreServicio" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Retiro"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:id="@+id/textDetalleReservaResumenRetiro" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:text="Cantidad Adultos"
+                            style="@style/InputLabel" />
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:text="Cantidad Niños"
+                            style="@style/InputLabel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textDetalleReservaResumenCantidadAdultos"
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:textColor="#000000"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/textDetalleReservaResumenCantidadNinos"
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:textColor="#000000"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:text="Precio Adulto"
+                            style="@style/InputLabel" />
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:text="Precio Niño"
+                            style="@style/InputLabel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textDetalleReservaResumenPrecioAdultos"
+                            android:layout_width="0dip"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_weight="0.5"
+                            android:textColor="#000000"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/textDetalleReservaResumenPrecioNinos"
+                            android:layout_width="0dip"
+                            android:layout_weight="0.5"
+                            android:textColor="#000000"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Observaciones"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:textColor="#000000"
+                        android:paddingBottom="5dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textDetalleReservaResumenObservaciones" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estado del Pago"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textDetalleReservaResumenEstadoPago" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estado de la Reserva"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="#000000"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textDetalleReservaResumenEstadoReserva" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Total"
+                        android:gravity="right"
+                        style="@style/InputLabel" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:gravity="right"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/textDetalleReservaResumenTotal" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

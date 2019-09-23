@@ -1,0 +1,1806 @@
+﻿@model TransporteMorande.Models.App.ReservasViewModel
+@{
+    Layout = "../Shared/_Layout.cshtml";
+
+}
+@section Styles
+{
+    <link href="../plugins/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+
+    <link href="../plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="../plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />*@
+    <link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="../plugins/bower_components/dropify/dist/css/dropify.min.css">*@
+    <link href="../plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+    <link href="../plugins/bower_components/jquery-wizard-master/css/wizard.css" rel="stylesheet">
+    <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+    <style>
+        .frontdate {
+            z-index: 1500 !important; /* has to be larger than 1050 */
+        }
+
+        .frontinput {
+            z-index: 1650 !important; /* has to be larger than 1050 */
+        }
+
+        .frontbusquedaClientes {
+            z-index: 1700 !important; /* has to be larger than 1050 */
+        }
+
+        td.details-control {
+            background: url('../plugins/images/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.shown td.details-control {
+            background: url('../plugins/images/details_close.png') no-repeat center center;
+        }
+    </style>
+}
+
+<div class="row bg-title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h4 class="page-title">Mantenedor de Reservas</h4>
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <a href="javascript: void(0);" target="_blank" id="nuevaReserva" class="btn btn-danger pull-right m-l-20 waves-effect waves-light">NUEVA RESERVA</a>
+        <a href="javascript: void(0);" target="_blank" id="botonExcel" class="btn btn-success pull-right m-l-20 waves-effect waves-light">EXCEL</a>
+        <ol class="breadcrumb">
+            <li><a href="#">Aplicación</a></li>
+            <li class="active">Reservas</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Criterios de búsqueda
+            </div>
+            @using (Html.BeginForm("Index", "Reservas", FormMethod.Post, new { @class = "form-horizontal", @id = "form_enviar" }))
+            {
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+                                <h6>Fecha Inicio</h6>
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.busquedaDesde, new { htmlAttributes = new { @id = "FechaDesde", @placeholder = "dd-mm-yyyy", @class = "form-control", @Value = Model.busquedaDesde.Value.ToString("dd-MM-yyyy") } })
+                                    @*<input type="text" class="form-control" id="FechaDesde" name="busquedaDesde" placeholder="dd-mm-aaaa">*@
+                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+
+                                <h6>Fecha Término</h6>
+                                <div class="input-group">
+                                    @*<input type="text" class="form-control" id="FechaHasta" name="busquedaHasta" placeholder="dd-mm-aaaa"> <span class="input-group-addon"><i class="icon-calender"></i></span>*@
+                                    @Html.EditorFor(model => model.busquedaHasta, new { htmlAttributes = new { @id = "FechaHasta", @placeholder = "dd-mm-yyyy", @class = "form-control", @Value = Model.busquedaHasta.Value.ToString("dd-MM-yyyy") } })
+                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+                                <h6>Estado Reserva</h6>
+                                <div class="input-group">
+                                    @Html.DropDownListFor(x => x.estadoSeleccionado, Model.Estados, new { @class = "selectpicker m-b-20", data_style = "btn-default btn-outline", @id = "estadoSeleccionado" })
+                                </div>
+
+                            </div>
+                            @if (User.IsInRole("Administrador"))
+                            {
+                        <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+                            <h6>Vendedores</h6>
+                            <div class="input-group">
+                                @Html.DropDownListFor(x => x.vendedorSeleccionado, Model.Vendedores, new { @class = "selectpicker m-b-20", data_style = "btn-default btn-outline", @id = "vendedorSeleccionado" })
+                            </div>
+
+                        </div>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="panel-footer"><button type="submit" id="filtrarReservas" class="btn btn-success" value="Filtrar">Filtrar</button> </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="white-box">
+            @*<h3 class="box-title">Servicios de Turismo</h3>*@
+            <div class="scrollable">
+                <div class="table-responsive">
+                    <table id="tablaReservas" class="table m-t-30 table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Fecha</th>
+                                <th>Servicio</th>
+                                <th>Cliente</th>
+                                <th>Retiro</th>
+                                <th>TipoRetiro</th>
+                                <th>Total</th>
+                                <th>Estado Reserva</th>
+                                <th>Vendedor</th>
+                                <th>Pax Adulto</th>
+                                <th>Precio Adulto</th>
+                                <th>Pax Infante</th>
+                                <th>Precio Infante</th>
+                                <th>Pago Cliente</th>
+                                <th>Observaciones</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Cliente</th>
+                                <th>Email Cliente</th>
+                                <th>Teléfonos Cliente</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.Reservas)
+                            {
+                            <tr>
+                                <td></td>
+                                <td>@a.FechaSalida.ToShortDateString()</td>
+                                <td>@(a.Servicio.Titulo.Length > 35 ? a.Servicio.Titulo.Substring(0, 35) + " ..." : a.Servicio.Titulo)</td>
+                                <td>@a.Cliente.Nombre @a.Cliente.ApellidoPaterno</td>
+                                <td>@a.Retiro   </td>
+                                <td>@a.TipoRetiro</td>
+                                <td>@a.Total.ToString("N0")</td>
+                                <td>@Html.DropDownList("EstadoReservaDato", new SelectList(Model.EstadosReservas, a.Estado), new { @class = "form-control", @onchange = "actualizarDato(this)", @data_dato = a.Id })</td>
+
+                                <td>@a.AspNetUsers.Nombre</td>
+                                <td>@a.PaxAdulto</td>
+                                <td>@a.PrecioAdulto</td>
+                                <td>@a.PaxInfante</td>
+                                <td>@a.PrecioInfante</td>
+                                <td>@Html.DropDownList("EstadoPagoDato", new SelectList(Model.EstadosPagoCombo, a.EstadoPago), new { @class = "form-control", @onchange = "actualizarDatoPago(this)", @data_dato = a.Id })</td>
+                                <td>@(string.IsNullOrEmpty(a.Observaciones) ? "Sin Observaciones" : a.Observaciones)</td>
+                                <td>@a.FechaIngreso.ToShortDateString()</td>
+                                <td>@a.Cliente.NombreCompleto</td>
+                                <td>@(string.IsNullOrEmpty(a.Cliente.Email) ? "Sin E-mail" : a.Cliente.Email)</td>
+                                <td>@(string.IsNullOrEmpty(a.Cliente.TelefonoPrimario) ? "S/ INFO" : a.Cliente.TelefonoPrimario) - @(string.IsNullOrEmpty(a.Cliente.TelefonoSecundario) ? "S/ INFO" : a.Cliente.TelefonoSecundario)</td>
+                                <td>
+                                    <button type="button" value="@a.Id" @(a.Cerrada ? "disabled" : "") onclick="modificar(value);" class='btn btn-sm btn-icon btn-pure btn-outline jsgrid-edit-button trigger-modal-edit' data-toggle="tooltip" data-original-title="Modificar"><i class="ti-pencil" aria-hidden="true"></i></button>
+                                    <button type="button" value="@a.Id" @(a.Cerrada ? "disabled" : "") onclick="consultaEliminar(value);" data-toggle="tooltip" data-original-title="Eliminar" class='btn btn-sm btn-icon btn-pure btn-outline trigger-modal-delete'><i class="ti-close" aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade frontbusquedaClientes" id="modal-SearchCliente" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color:cornflowerblue;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="modal-SearchEntityTitle" style="color:white;">Buscar Cliente</h3>
+            </div>
+            <div class="modal-body" id="modal-SearchClienteBody">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Label("Buscar")
+                                <div class="input-group">
+                                    @Html.Editor("buscarClientePor", new { htmlAttributes = new { @class = "form-control", @id = "txtFiltrarCliente" } })
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="button" title="Buscar" id="btn-SearchClienteConfirm">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessage("msgError", "", new { @class = "text-danger", @id = "txtMsgErrorMaestro" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-12">
+
+                        <div class="table-responsive" id="divSearchClienteRespuesta">
+                            @Html.Partial("Partial/BusquedaClientes", new List<TransporteMorande.Models.App.Cliente>())
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade frontbusquedaClientes" id="modal-SearchClienteModificar" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color:cornflowerblue;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="modal-SearchEntityTitle" style="color:white;">Buscar Cliente</h3>
+            </div>
+            <div class="modal-body" id="modal-SearchClienteBodyModificar">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Label("Buscar")
+                                <div class="input-group">
+                                    @Html.Editor("buscarClientePor", new { htmlAttributes = new { @class = "form-control", @id = "txtFiltrarClienteModificar" } })
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="button" title="Buscar" id="btn-SearchClienteConfirmModificar">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessage("msgError", "", new { @class = "text-danger", @id = "txtMsgErrorMaestro" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-12">
+
+                        <div class="table-responsive" id="divSearchClienteRespuestaModificar">
+                            @Html.Partial("Partial/BusquedaClientesModificar", new List<TransporteMorande.Models.App.Cliente>())
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalNuevaReserva" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="white-box">
+
+                    <h3 class="box-title m-b-0">Nueva Reserva</h3>
+                    <small>Transportes Morandé</small>
+                    <div id="tabNuevaReserva" class="wizard">
+                        <ul class="wizard-steps" role="tablist">
+                            <li class="active" role="tab">
+                                <h4><span>1</span>Cliente</h4>
+                            </li>
+                            <li role="tab">
+                                <h4><span>2</span>Servicio</h4>
+                            </li>
+                            <li role="tab">
+                                <h4><span>3</span>Totales</h4>
+                            </li>
+                        </ul>
+                        @using (Ajax.BeginForm("Nuevo", "Reservas", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "idMensaje",
+                    LoadingElementId = "loader2",
+                    HttpMethod = "Post"
+                }, new { @class = "form-horizontal form-material", @id = "form_enviarNuevo" }))
+                {
+                    <div class="wizard-content">
+                        <div class="wizard-pane active" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <label>Salida</label>
+                                            <div class="input-group">
+                                                <input class="form-control frontdate" name="FechaSalidaNuevo" id="FechaSalidaNuevo" type="text" placeholder="Fecha de Salida" />
+                                                <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <label>Cliente</label>
+                                            <div class="input-group">
+                                                <input id="IdClienteSeleccionadoNuevo" name="IdClienteNuevo" type="hidden" />
+                                                <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="NombreCliente" name="NombreCliente" type="text" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-danger" type="button" id="btn-SearchCliente"><i class="ti-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <label>Teléfono 1</label>
+                                            <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="Telefono1Cliente" type="text" />
+
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Teléfono 2</label>
+                                            <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="Telefono2Cliente" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wizard-pane" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <label class="col-xs-12">Servicio</label>
+                                        <div class="col-xs-12">
+                                            @Html.DropDownList("IdServicioNuevo", Model.Servicios, new { @class = "form-control", @name = "IdServicioNuevo" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div class="col-xs-6">
+                                            <label>Comisiones</label>
+                                            <select id="comisionesNueva" class="form-control">
+                                                <option value=''>Visualice las comisiones</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Tickets</label>
+                                            <select id="ticketNueva" class="form-control">
+                                                <option value=''>Visualice los tickets</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">                                       
+                                        <div class="col-xs-6">
+                                            <label>Lugar de retiro:</label>
+                                            @Html.DropDownList("IdLugarRetiro", Model.Hospedajes, new { @class = "form-control", @name = "IdLugarRetiro" })
+                                            @*<input class="form-control" name="IdHotel" id="IdHotel" type="text" required="" placeholder="Hotel">*@
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Dirección:</label>
+                                            @Html.DropDownList("direccionesNueva", Model.Direcciones, new { @class = "form-control", @name = "direccionesNueva" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="wizard-pane" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input id="TotalNuevo" type="hidden">
+                                        <div class="col-xs-6">
+                                            <label>Pax Adulto </label>
+                                            <input value="1" id="PaxAdultoNuevo" name="PaxAdultoNuevo" required="" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline" />
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Precio Adulto</label>
+                                            <input value="1" id="PrecioAdultoNuevo" name="PrecioAdultoNuevo" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <label>Pax Infante </label>
+                                            <input class="form-control" value="1" name="PaxInfanteNuevo" id="PaxInfanteNuevo" required="" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline" />
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Precio Infante</label>
+                                            <input class="form-control" value="1" name="PrecioInfanteNuevo" id="PrecioInfanteNuevo" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline">
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div class="col-xs-6">
+                                            <label>Observaciones</label>
+                                            <input class="form-control" id="ObservacionesNuevo" type="text" required="" placeholder="Observaciones">
+                                        </div>
+                                        @if (User.IsInRole("Administrador"))
+                                        {
+                                            <div class="col-xs-6">
+                                            <label>Estado del Pago</label>
+                                             @Html.DropDownList("EstadoPagoNuevo", Model.EstadoPago, new { @class = "form-control select2", @id = "EstadoPagoNuevo" })
+                                            </div>
+                                        }
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        }
+
+                    </div>
+                    <div id="idMensaje">
+
+                    </div>
+                    <div id="loader2" class=" aletr" style="display:none">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+
+
+
+                </div>
+
+                @*@Html.Partial("../Shared/Mensaje", new TransporteMorande.Models.App.MensajeViewModel())*@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEditarReserva" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="white-box">
+
+                    <h3 class="box-title m-b-0">Modificar Reserva</h3>
+                    <small>Transportes Morandé</small>
+                    <div id="tabEditarReserva" class="wizard">
+                        <ul class="wizard-steps" role="tablist">
+                            <li class="active" role="tab">
+                                <h4><span>1</span>Cliente</h4>
+                            </li>
+                            <li role="tab">
+                                <h4><span>2</span>Servicio</h4>
+                            </li>
+                            <li role="tab">
+                                <h4><span>3</span>Totales</h4>
+                            </li>
+                        </ul>
+                        @using (Ajax.BeginForm("Modificar", "Reservas", new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "idMensaje2",
+                            LoadingElementId = "loader3",
+                            HttpMethod = "Post"
+                        }, new { @class = "form-horizontal form-material", @id = "form_enviarEditar" }))
+                        {
+                            <input id="IdReservaModificar" type="hidden" />
+                            <div class="wizard-content">
+                                <div class="wizard-pane active" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-xs-6">
+                                                    <label>Salida</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control frontdate" name="FechaSalidaModificar" id="FechaSalidaModificar" type="text" placeholder="Fecha de Salida" />
+                                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <label>Cliente</label>
+                                                    <div class="input-group">
+                                                        <input id="IdClienteSeleccionadoModificar" name="IdClienteModificar" type="hidden" />
+                                                        <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="NombreClienteModificar" name="NombreCliente" type="text" />
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-danger" type="button" id="btn-SearchClienteModificar"><i class="ti-search"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-6">
+                                                    <label>Teléfono 1</label>
+                                                    <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="Telefono1ClienteModificar" type="text" />
+
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Teléfono 2</label>
+                                                    <input class="form-control" readonly placeholder="-- Seleccione cliente --" id="Telefono2ClienteModificar" type="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wizard-pane" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group ">
+                                                <label class="col-xs-12">Servicio</label>
+                                                <div class="col-xs-12">
+                                                    @Html.DropDownList("IdServicioModificar", Model.Servicios, new { @class = "form-control", @name = "IdServicioModificar" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <div class="col-xs-6">
+                                                    <label>Comisiones</label>
+                                                    <select id="comisionesModificar" class="form-control">
+                                                        <option value=''>Visualiza las comisiones</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Tickets</label>
+                                                    <select id="ticketModificar" class="form-control">
+                                                        <option value=''>Visualiza los tickets</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <div class="col-xs-6">
+                                                    <label>Lugar de retiro:</label>
+                                                    @Html.DropDownList("IdLugarRetiroModificar", Model.Hospedajes, new { @class = "form-control", @name = "IdLugarRetiroModificar" })
+                                                    @*<input class="form-control" name="IdHotel" id="IdHotel" type="text" required="" placeholder="Hotel">*@
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Dirección:</label>
+                                                    @Html.DropDownList("direccionesModificar", Model.Direcciones, new { @class = "form-control", @name = "direccionesModificar" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wizard-pane" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input id="TotalModificar" type="hidden">
+                                            <div class="form-group">
+                                                <div class="col-xs-6">
+                                                    <label>Pax Adulto </label>
+                                                    <input value="1" id="PaxAdultoModificar" name="PaxAdultoModificar" required="" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline" />
+
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Precio Adulto</label>
+                                                    <input value="1" id="PrecioAdultoModificar" name="PrecioAdultoModificar" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-6">
+                                                    <label>Pax Infante </label>
+                                                    <input class="form-control" value="1" id="PaxInfanteModificar" name="PaxInfanteModificar" required="" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline" />
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Precio Infante</label>
+                                                    <input class="form-control" value="1" id="PrecioInfanteModificar" name="PrecioInfanteModificar" type="text" data-bts-button-down-class="btn btn-default btn-outline" data-bts-button-up-class="btn btn-default btn-outline">
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <div class="col-xs-6">
+                                                    <label>Observaciones</label>
+                                                    <input class="form-control" id="ObservacionesModificar" type="text" required="" placeholder="Observaciones">
+                                                </div>
+                                                @if (User.IsInRole("Administrador"))
+    {
+                                            <div class="col-xs-6">
+                                                <label>Estado del Pago</label>
+                                                @Html.DropDownList("EstadoPagoModificar", Model.EstadoPago, new { @class = "form-control select2", @id = "EstadoPagoModificar" })
+                                            </div>
+}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>}
+                    </div>
+                    <div id="idMensaje">
+
+                    </div>
+                    <div id="loader2" class=" aletr" style="display:none">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                        </svg>
+                    </div>
+
+
+                </div>
+
+                @*@Html.Partial("../Shared/Mensaje", new TransporteMorande.Models.App.MensajeViewModel())*@
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @*<script src="../plugins/bower_components/footable/js/footable.all.min.js"></script>*@
+
+    <script src="../plugins/bower_components/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="../plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/bower_components/dropify/dist/js/dropify.min.js"></script>
+    <script src="../plugins/bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="../plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js"></script>
+    <link rel="stylesheet" href="../plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.css">
+    <script src="../plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.js"></script>
+    <script src="../plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js"></script>
+
+    <script>
+        var direccionAuxiliar = '';
+        $('#IdLugarRetiroModificar').on('change', function (e) {
+
+            var seleccion = $("#IdLugarRetiroModificar option:selected").val();
+            var IdCliente = $('#IdClienteSeleccionadoModificar').val();
+            $.ajax({
+                url: '/Reservas/ObtenerDomicilios',
+                type: 'GET',
+                data: { tipo: seleccion, idCliente: IdCliente },
+                cache: false,
+                dataType: "json",
+                success: function (resultado) {
+                console.log(resultado);
+                   var $selectDireccion = $('#direccionesModificar');
+                            $selectDireccion.empty();
+                            if (Object.keys(resultado).length > 0) {
+                                $.each(resultado, function (key, value) {
+                                    if (value.Id == direccionAuxiliar)
+                                        $selectDireccion.append('<option value=' + value.Id + ' selected>' + value.Nombre + '</option>');
+                                    else 
+                                        $selectDireccion.append('<option value=' + value.Id + '>' + value.Nombre + '</option>');
+                                });
+                            }
+                            else
+                                $selectDireccion.append('<option value=\'Seleccione\'>Seleccione</option>');
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+
+        $('#IdLugarRetiro').on('change', function (e) {
+
+            var seleccion = $("#IdLugarRetiro option:selected").val();
+            var IdCliente = $('#IdClienteSeleccionadoNuevo').val();
+            $.ajax({
+                url: '/Reservas/ObtenerDomicilios',
+                type: 'GET',
+                data: { tipo: seleccion, idCliente: IdCliente },
+                cache: false,
+                dataType: "json",
+                success: function (resultado) {
+                console.log(resultado);
+                   var $selectDireccion = $('#direccionesNueva');
+                            $selectDireccion.empty();
+                            if (Object.keys(resultado).length > 0) {
+                                $.each(resultado, function (key, value) {
+                                    //var valor = resultado.precioCliente;
+                                    $selectDireccion.append('<option value=' + value.Id + '>'+ value.Nombre +'</option>');
+                                });
+                            }
+                            else
+                                $selectDireccion.append('<option value=\'Seleccione\'>Seleccione</option>');
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+
+        function actualizarDato(input)
+        {
+            var nuevoEstado = input.value;
+            var idReserva = input.dataset.dato;
+            $.ajax({
+                url: '/Reservas/cambiarEstado',
+                type: 'POST',
+                data: { idReserva: idReserva, nuevoEstado: nuevoEstado},
+                cache: false,
+                dataType: "json",
+                success: function (result) {
+                    if (result == "Error")
+                    {
+                        swal("Error", "Ocurrió un error. Contactarse con el administrador.", "error");
+                        console.log(result);
+                    }
+                },
+                error: function (result) {
+                    swal("Error", "Ocurrió un error. Contactarse con el administrador.", "error");
+
+                    console.log(result);
+                }
+            });
+        }
+
+        function actualizarDatoPago(input) {
+            var nuevoEstado = input.value;
+            var idReserva = input.dataset.dato;
+            $.ajax({
+                url: '/Reservas/cambiarEstadoPago',
+                type: 'POST',
+                data: { idReserva: idReserva, nuevoEstado: nuevoEstado },
+                cache: false,
+                dataType: "json",
+                success: function (result) {
+                    if (result == "Error") {
+                        swal("Error", "Ocurrió un error. Contactarse con el administrador.", "error");
+                        console.log(result);
+                    }
+                },
+                error: function (result) {
+                    swal("Error", "Ocurrió un error. Contactarse con el administrador.", "error");
+
+                    console.log(result);
+                }
+            });
+
+        }
+
+        $('#nuevaReserva').click(function () {
+            $('#ModalNuevaReserva').modal();
+        });
+
+        $('#botonExcel').click(function () {
+        
+            var desde = $("#FechaDesde").val();
+            var hasta = $("#FechaHasta").val();
+            var estado = $("#estadoSeleccionado").val();
+            var vendedor = $("#vendedorSeleccionado").val();
+            $.ajax({
+                url: '/Reservas/Excel',
+                type: 'GET',
+                data: { desde: desde, hasta: hasta, estado: estado, vendedor: vendedor },
+                cache: false,
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    //var response = JSON.parse(result);
+                    window.location = '/Report/Download?fileGuid=' + result.FileGuid
+                        + '&filename=' + result.FileName;
+                },
+                error: function (result) {
+                    swal("Error", "Ocurrió un error. Contactarse con el administrador.", "error");
+
+                    console.log(result);
+                }
+            });
+        });
+
+        $('#PaxAdultoNuevo').on('change', function (e) {
+            total();
+        });
+
+        $('#PaxInfanteNuevo').on('change', function (e) {
+            total();
+        });
+
+        $('#PrecioAdultoNuevo').on('change', function (e) {
+            total();
+        });
+
+        $('#PrecioInfanteNuevo').on('change', function (e) {
+            total();
+        });
+
+        $('#PaxAdultoModificar').on('change', function (e) {
+            totalModificar();
+        });
+
+        $('#PaxInfanteModificar').on('change', function (e) {
+            totalModificar();
+        });
+
+        $('#PrecioAdultoModificar').on('change', function (e) {
+            totalModificar();
+        });
+
+        $('#PrecioInfanteModificar').on('change', function (e) {
+            totalModificar();
+        });
+
+        $('#IdServicioNuevo').on('change', function (e) {
+
+            var idServicio = $("#IdServicioNuevo option:selected").val();
+            $.ajax({
+                url: '/Servicios/Obtener',
+                type: 'GET',
+                data: { id: idServicio },
+                cache: false,
+                dataType: "json",
+                success: function (resultado) {
+
+                    $('#PrecioAdultoNuevo').val(resultado.precioCliente);
+                    $('#PrecioInfanteNuevo').val(Math.round(resultado.precioCliente / 2));
+                    total();
+                    $.ajax({
+                        url: '/Reservas/buscarComisionesYTickets',
+                        type: 'POST',
+                        data: { idServicio: idServicio },
+                        cache: false,
+                        dataType: "json",
+                        success: function (result) {
+                            var $selectComision = $('#comisionesNueva');
+                            $selectComision.empty();
+                            if (Object.keys(result.Comisiones).length > 0) {
+                                $.each(result.Comisiones, function (key, value) {
+                                    //var valor = resultado.precioCliente;
+                                    $selectComision.append('<option value=' + value.Id + '>Desde: $' + number_format(value.PrecioInicial, 0) + '-Hasta: $' + number_format(value.PrecioFinal, 0) + '. Comisión: ' + number_format(value.Porcentaje, 0) + '%</option>');
+                                });
+                            }
+                            else
+                                $selectComision.append('<option value=\'\'>No tiene comisiones</option>');
+
+                            var $selectTicket = $('#ticketNueva');
+                            $selectTicket.empty();
+                            if (Object.keys(result.Tickets).length > 0) {
+                                $.each(result.Tickets, function (key, value) {
+                                $selectTicket.append('<option value=' + value.Id + '>Valor: $' + number_format(value.Valor, 0)  + '. Nombre: ' + value.Nombre + '</option>');
+                                });
+                            }
+                            else
+                                $selectTicket.append('<option value=\'\'>No tiene tickets</option>');
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+
+        $('#IdServicioModificar').on('change', function (e) {
+
+            var idServicio = $("#IdServicioModificar option:selected").val();
+            $.ajax({
+                url: '/Servicios/Obtener',
+                type: 'GET',
+                data: { id: idServicio },
+                cache: false,
+                dataType: "json",
+                success: function (resultado) {
+
+                    $('#PrecioAdultoModificar').val(resultado.precioCliente);
+                    $('#PrecioInfanteModificar').val(Math.round(resultado.precioCliente / 2));
+                    totalModificar();
+                    $.ajax({
+                        url: '/Reservas/buscarComisionesYTickets',
+                        type: 'POST',
+                        data: { idServicio: idServicio },
+                        cache: false,
+                        dataType: "json",
+                        success: function (result) {
+                            var $selectComision = $('#comisionesModificar');
+                            $selectComision.empty();
+                            if (Object.keys(result.Comisiones).length > 0) {
+                                $.each(result.Comisiones, function (key, value) {
+                                    var valor = resultado.precioCliente;
+                                    $selectComision.append('<option value=' + value.Id + '>Desde: $' + number_format(value.PrecioInicial, 0) + '-Hasta: $' + number_format(value.PrecioFinal, 0) + '. Comisión: ' + number_format(value.Porcentaje, 0) + '%</option>');
+                                });
+                            }
+                            else
+                                $selectComision.append('<option value=\'\'>No tiene comisiones</option>');
+
+                            var $selectTicket = $('#ticketModificar');
+                            $selectTicket.empty();
+                            if (Object.keys(result.Tickets).length > 0) {
+                                $.each(result.Tickets, function (key, value) {
+                                    $selectTicket.append('<option value=' + value.Id + '>Valor: $' + number_format(value.Valor, 0) + '. Nombre: ' + value.Nombre + '</option>');
+                                });
+                            }
+                            else
+                                $selectTicket.append('<option value=\'\'>No tiene tickets</option>');
+                        },
+                        error: function (result) {
+                            console.log(result);
+                        }
+                    });
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+
+        function totalModificar() {
+            var paxAdulto = $('#PaxAdultoModificar').val();
+            var cantidadAdulto = $('#PrecioAdultoModificar').val();
+            var paxInfante = $('#PaxInfanteModificar').val();
+            var cantidadInfante = $('#PrecioInfanteModificar').val();
+            var total = (paxAdulto * cantidadAdulto) + (paxInfante * cantidadInfante);
+            $('#TotalModificar').val(total);
+            $('#TotalModificarMostrar').text(" $ " + number_format(total, 0));
+
+        }
+
+        $("#btn-SearchCliente").on("click", function () {
+
+            $("#txtFiltrarCliente").val("");
+            $("#divSearchClienteRespuesta").html("");
+            $("#modal-SearchCliente").modal("show");
+        });
+
+        $("#btn-SearchClienteConfirm").on("click", function () {
+
+            var txtFiltrar = $("#txtFiltrarCliente").val();
+            var _url = '/Cliente/GetClientes';
+            $.ajax({
+                url: _url,
+                type: 'GET',
+                data: { texto: txtFiltrar, tipo: "NuevaReserva" },
+                cache: false,
+                dataType: "html",
+                success: function (result) {
+                    $("#divSearchClienteRespuesta").html(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+
+        });
+
+        function clienteSeleccionado(id) {
+            $("#modal-SearchCliente").modal("hide");
+            $.ajax({
+                url: '/Cliente/GetCliente',
+                type: 'GET',
+                data: { id: id },
+                cache: false,
+                dataType: "html",
+                success: function (result) {
+                    var data = $.parseJSON(result);
+                    $("#NombreCliente").val(data.Nombre);
+                    $("#IdClienteSeleccionadoNuevo").val(data.Id);
+                    $("#Telefono1Cliente").val(data.Telefono1);
+                    $("#Telefono2Cliente").val(data.Telefono1);
+                    $('#form_enviarNuevo').formValidation('revalidateField', 'NombreCliente');
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            })
+        }
+
+        $("#btn-SearchClienteModificar").on("click", function () {
+
+            $("#txtFiltrarClienteModificar").val("");
+            $("#divSearchClienteRespuestaModificar").html("");
+            $("#modal-SearchClienteModificar").modal("show");
+        });
+
+        $("#btn-SearchClienteConfirmModificar").on("click", function () {
+
+            var txtFiltrar = $("#txtFiltrarClienteModificar").val();
+            var _url = '/Cliente/GetClientes';
+            $.ajax({
+                url: _url,
+                type: 'GET',
+                data: { texto: txtFiltrar, tipo: "ModificarReserva" },
+                cache: false,
+                dataType: "html",
+                success: function (result) {
+                    $("#divSearchClienteRespuestaModificar").html(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+
+        });
+
+        function clienteSeleccionadoModificar(id) {
+            $("#modal-SearchClienteModificar").modal("hide");
+            $.ajax({
+                url: '/Cliente/GetCliente',
+                type: 'GET',
+                data: { id: id },
+                cache: false,
+                dataType: "html",
+                success: function (result) {
+                    var data = $.parseJSON(result);
+                    $("#NombreClienteModificar").val(data.Nombre);
+                    $("#IdClienteSeleccionadoModificar").val(data.Id);
+                    $("#Telefono1ClienteModificar").val(data.Telefono1);
+                    $("#Telefono2ClienteModificar").val(data.Telefono1);
+                    $('#form_enviarEditar').formValidation('revalidateField', 'NombreClienteModificar');
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            })
+        }
+
+        $("input[name='PaxAdultoNuevo']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PrecioAdultoNuevo']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PrecioInfanteNuevo']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PaxInfanteNuevo']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PaxAdultoModificar']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PrecioAdultoModificar']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PrecioInfanteModificar']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        $("input[name='PaxInfanteModificar']").TouchSpin({
+            min: 0,
+            max: 10000000000
+        });
+
+        function cerrarAlerta() {
+            $('#filtrarReservas').click();
+            $("#ModalNuevaReserva").modal("hide");
+        }
+
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd-mm-yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+
+        var editor; 
+
+        $(document).ready(function () {
+            
+            $('#tabNuevaReserva').wizard({
+                enableWhenVisited: true,
+                buttonsAppendTo: 'this',
+                  templates: {
+                    buttons: function() {
+                        const options = this.options;
+                      return `<div class="wizard-buttons">
+                                <a class="wizard-back" href="#${this.id}" data-wizard="back" role="button">${options.buttonLabels.back}</a>
+                                <a class="wizard-next" href="#${this.id}" data-wizard="next" role="button">${options.buttonLabels.next}</a>
+                                <a class="wizard-finish" href="#${this.id}" data-wizard="finish" role="button">${options.buttonLabels.finish}</a>
+                                <div class="pull-right"><label>Total: </label> <div id="TotalNuevoMostrar" class="pull-right"></div></div>
+                            </div>`;
+                    }
+                  },
+                buttonLabels: {
+                    next: 'Siguiente',
+                    back: 'Anterior',
+                    finish: 'Finalizar'
+                },
+                onInit: function () {
+                    $('#form_enviarNuevo').formValidation({
+                        framework: 'bootstrap',
+                        fields: {
+                            FechaSalidaNuevo: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Este campo no puede estar vacío'
+                                    }
+                                }
+                            },
+                            NombreCliente: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Es obligatorio seleccionar un cliente'
+                                    }
+                                }
+                            },
+                            IdServicioNuevo: {
+                                validators: {
+                                    callback: {
+                                        message: 'Es obligatorio seleccionar un servicio',
+                                        callback: function (value, validator, $field) {
+                                            var options = validator.getFieldElements('IdServicioNuevo').val();
+                                            console.log('Validador servicio');
+                                            console.log(options);
+                                            return (options != null && options != 'Seleccione Servicio');
+                                        }
+                                    }
+                                }
+                            },
+                            direccionesNueva: {
+                                validators: {
+                                    callback: {
+                                        message: 'Es obligatorio seleccionar una dirección',
+                                        callback: function (value, validator, $field) {
+        
+                                            var options = validator.getFieldElements('direccionesNueva').val();
+                                            console.log('Validador dirección');
+                                            console.log(options);
+                                            console.log(validator.getFieldElements('direccionesNueva').text());
+                                            return (options != null && options != 'Seleccione');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+                validator: function () {
+                    var fv = $('#form_enviarNuevo').data('formValidation');
+                    var $this = $(this);
+                    // Validate the container
+                    fv.validateContainer($(this));
+                    var isValidStep = fv.isValidContainer($(this));
+                    if (isValidStep === false || isValidStep === null) {
+                        return false;
+                    }
+                    return true;
+                },
+                onFinish: function () {
+                    //$('#form_enviarNuevo').submit();
+                    var Fecha = $('#FechaSalidaNuevo').val();
+                    var NombreCliente = $('#NombreCliente').val();
+                    var IdCliente = $('#IdClienteSeleccionadoNuevo').val();
+                    var IdServicio = $('#IdServicioNuevo').val();
+                    var NombreServicio = $('#IdServicioNuevo option:selected').text();
+
+                    var IdDireccion = $('#direccionesNueva').val();
+                    var NombreDireccion = $('#direccionesNueva option:selected').text();
+                    var tipoDireccion = $('#IdLugarRetiro option:selected').val();
+
+                    var Habitacion = $('#HabitacionNuevo').val();
+                    var EstadoPago = $('#EstadoPagoNuevo').val();
+                    var PaxAdulto = $('#PaxAdultoNuevo').val();
+                    var PrecioAdulto = $('#PrecioAdultoNuevo').val();
+                    var PaxInfante = $('#PaxInfanteNuevo').val();
+                    var PrecioInfante = $('#PrecioInfanteNuevo').val();
+                    var Observaciones = $('#ObservacionesNuevo').val();
+                    var Total = $('#TotalNuevo').val();
+
+                    var model = {
+                        FechaSalida: Fecha,
+                        IdCliente: IdCliente,
+                        Habitacion: Habitacion,
+                        PaxAdulto: PaxAdulto,
+                        PrecioAdulto: PrecioAdulto,
+                        PaxInfante: PaxInfante,
+                        PrecioInfante: PrecioInfante,
+                        Total: Total,
+                        Observaciones: Observaciones,
+                        EstadoPago: EstadoPago,
+                        IdServicio: IdServicio,
+                        IdDireccion: IdDireccion,
+                        TipoDireccion: tipoDireccion
+                    };
+
+                    var texto =
+                        "<div class=\"form-group frontbusquedaClientes\">" +
+                        "<div class=\"col-xs-12 pull-left\"><label>" + "Fecha Salida: " + "</label>" + Fecha + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Cliente: " + "</label>" + NombreCliente + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Servicio: " + "</label>" + NombreServicio + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Retiro: " + "</label>" + NombreDireccion + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Pax Adulto: " + "</label>" + PaxAdulto + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Precio Adulto: " + "</label>" + number_format(PrecioAdulto, 0) + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Pax Infante: " + "</label>" + PaxInfante + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Precio Infante: " + "</label>" + number_format(PrecioInfante, 0) + "</div>" +
+                        "<hr>" +
+                        "<div class=\"col-xs-12\"><label>" + "Observaciones: " + "</label>" + Observaciones + "</div>" +
+                        "<hr />" +
+                        "<div class=\"col-xs-12\"><label>" + "Total: " + "</label>" + number_format(Total, 0) + "</div>" +
+                        "</div>";
+                    //span.innerHTML = "<b>Fecha salida:</b> " + Fecha;
+                    //swal({
+                    //    title: "Confirmación de reserva",
+                    //    text: texto,
+                    //    html: true,
+                    //    confirmButtonText: "Confirmar"
+                    //});
+                    swal({
+                        title: "Confirmación de reserva",
+                        html: true,
+                        text: texto,
+                        confirmButtonText: "Confirmar",
+                        cancelButtonText: "Cancelar",
+                        icon: "warning",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        allowOutsideClick: false,
+                        showLoaderOnConfirm: true,
+                        showCancelButton:true,
+                        preConfirm: function () {
+                            return new Promise(function (resolve, reject) {
+                                $.ajax({
+                                    success: function (response) {
+                                        resolve(response)
+                                    },
+                                    error: function (a, b, c) {
+                                        reject("error message")
+                                    }
+                                })
+                            })
+                        }
+                        //confirmButtonColor: "#DD6B55",
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: "POST",
+                                url: '/Reservas/Nuevo',
+                                data: model,
+                                cache: false,
+                                dataType: "json",
+                                success: function (response) {
+                                    console.log(response);
+                                    if (!response.Error) {
+                                        swal("Reserva creada", "", "success");
+                                        setTimeout(function () {
+                                            $('#filtrarReservas').click();
+                                        }, 2500);
+
+                                    }
+                                    else {
+                                        swal("Ocurrió un error", response.Retorno, "error");
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            swal("Operación cancelada", "Todo sigue como antes :)", "error");
+                        }
+                    });
+                }
+            });
+
+            $('#tabEditarReserva').wizard({
+                enableWhenVisited: true,
+                buttonsAppendTo: 'this',
+                templates: {
+                    buttons: function () {
+                        const options = this.options;
+                        return `<div class="wizard-buttons">
+                                <a class="wizard-back" href="#${this.id}" data-wizard="back" role="button">${options.buttonLabels.back}</a>
+                                <a class="wizard-next" href="#${this.id}" data-wizard="next" role="button">${options.buttonLabels.next}</a>
+                                <a class="wizard-finish" href="#${this.id}" data-wizard="finish" role="button">${options.buttonLabels.finish}</a>
+                                <div class="pull-right"><label>Total: </label> <div id="TotalModificarMostrar" class="pull-right"></div></div>
+                            </div>`;
+                    }
+                },
+                buttonLabels: {
+                    next: 'Siguiente',
+                    back: 'Anterior',
+                    finish: 'Finalizar'
+                },
+                onInit: function () {
+                    $('#form_enviarEditar').formValidation({
+                        framework: 'bootstrap',
+                        fields: {
+                            FechaSalidaModificar: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Este campo no puede estar vacío'
+                                    }
+                                }
+                            },
+                            NombreClienteModificar: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Es obligatorio seleccionar un cliente'
+                                    }
+                                }
+                            },
+                            IdServicioModificar: {
+                                validators: {
+                                    callback: {
+                                        message: 'Es obligatorio seleccionar un servicio',
+                                        callback: function (value, validator, $field) {
+                                            var options = validator.getFieldElements('IdServicioModificar').val();
+                                            return (options != null && options != 'Seleccione Servicio');
+                                        }
+                                    }
+                                }
+                            },
+                            direccionesModificar: {
+                                validators: {
+                                    callback: {
+                                        message: 'Es obligatorio seleccionar una dirección',
+                                        callback: function (value, validator, $field) {
+        
+                                            var options = validator.getFieldElements('direccionesModificar').val();
+                                            return (options != null && options != 'Seleccione');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+                validator: function () {
+                    var fv = $('#form_enviarEditar').data('formValidation');
+                    var $this = $(this);
+                    // Validate the container
+                    fv.validateContainer($(this));
+                    var isValidStep = fv.isValidContainer($(this));
+                    if (isValidStep === false || isValidStep === null) {
+                        return false;
+                    }
+                    return true;
+                },
+                onFinish: function () {
+                    //$('#form_enviarNuevo').submit();
+                    var Fecha = $('#FechaSalidaModificar').val();
+                    var NombreCliente = $('#NombreClienteModificar').val();
+                    var IdCliente = $('#IdClienteSeleccionadoModificar').val();
+                    var IdServicio = $('#IdServicioModificar').val();
+                    var NombreServicio = $('#IdServicioModificar option:selected').text();
+                    var IdHotel = $('#IdHotelModificar').val();
+                    var NombreHotel = $('#IdHotelModificar option:selected').text();
+                    var Habitacion = $('#HabitacionModificar').val();
+                    var EstadoPago = $('#EstadoPagoModificar').val();
+                    var PaxAdulto = $('#PaxAdultoModificar').val();
+                    var PrecioAdulto = $('#PrecioAdultoModificar').val();
+                    var PaxInfante = $('#PaxInfanteModificar').val();
+                    var PrecioInfante = $('#PrecioInfanteModificar').val();
+                    var Observaciones = $('#ObservacionesModificar').val();
+                    var Total = $('#TotalModificar').val();
+                    
+                    var IdReserva = $('#IdReservaModificar').val();
+                    var model = {
+                        FechaSalida: Fecha,
+                        IdCliente: IdCliente,
+                        Habitacion: Habitacion,
+                        PaxAdulto: PaxAdulto,
+                        PrecioAdulto: PrecioAdulto,
+                        PaxInfante: PaxInfante,
+                        PrecioInfante: PrecioInfante,
+                        Total: Total,
+                        Observaciones: Observaciones,
+                        EstadoPago: EstadoPago,
+                        IdServicio: IdServicio,
+                        IdHotel: IdHotel,
+                        Id: IdReserva
+                    };
+
+                    var texto =
+                        "<div class=\"form-group frontbusquedaClientes\">" +
+                        "<div class=\"col-xs-12 pull-left\"><label>" + "Fecha Salida: " + "</label>" + Fecha + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Cliente: " + "</label>" + NombreCliente + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Servicio: " + "</label>" + NombreServicio + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Hotel: " + "</label>" + NombreHotel + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Habitacion: " + "</label>" + Habitacion + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Estado de Pago: " + "</label>" + EstadoPago + "</div>" +
+                        "<br />" +
+                        "<div class=\"col-xs-12\"><label>" + "Pax Adulto: " + "</label>" + PaxAdulto + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Precio Adulto: " + "</label>" + number_format(PrecioAdulto, 0) + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Pax Infante: " + "</label>" + PaxInfante + "</div>" +
+                        "<div class=\"col-xs-12\"><label>" + "Precio Infante: " + "</label>" + number_format(PrecioInfante, 0) + "</div>" +
+                        "<hr>" +
+                        "<div class=\"col-xs-12\"><label>" + "Observaciones: " + "</label>" + Observaciones + "</div>" +
+                        "<hr />" +
+                        "<div class=\"col-xs-12\"><label>" + "Total: " + "</label>" + number_format(Total, 0) + "</div>" +
+                        "</div>";
+                    swal({
+                        title: "Modificación de reserva",
+                        html: true,
+                        text: texto,
+                        confirmButtonText: "Confirmar",
+                        cancelButtonText: "Cancelar",
+                        icon: "warning",
+                        closeOnConfirm: false,
+                        closeOnCancel: true,
+                        allowOutsideClick: false,
+                        showLoaderOnConfirm: true,
+                        showCancelButton:true,
+                        preConfirm: function () {
+                            return new Promise(function (resolve, reject) {
+                                $.ajax({
+                                    success: function (response) {
+                                        resolve(response)
+                                    },
+                                    error: function (a, b, c) {
+                                        reject("error message")
+                                    }
+                                })
+                            })
+                        }
+                        //confirmButtonColor: "#DD6B55",
+                    },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/Reservas/Editar',
+                                    data: model,
+                                    cache: false,
+                                    dataType: "json",
+                                    success: function (response) {
+                                        console.log(response);
+                                        if (!response.Error) {
+                                            swal("Reserva modificada", "", "success");
+                                            setTimeout(function () {
+                                                $('#filtrarReservas').click();
+                                            }, 2500);
+
+                                        }
+                                        else {
+                                            swal("Ocurrió un error", response.Retorno, "error");
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                swal("Operación cancelada", "Todo sigue como antes :)", "error");
+                            }
+                        });
+                }
+            });
+
+            $('#TotalNuevo').val(0);
+            $('#TotalNuevoMostrar').text(" $ 0");
+
+            $('#TotalModificar').val(0);
+            $('#TotalModificarMostrar').text(" $ 0");
+
+            $('#FechaDesde').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+            $('#FechaHasta').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('#FechaSalidaNuevo').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).on('change', function (e) {
+                $('#form_enviarNuevo').formValidation('revalidateField', 'FechaSalidaNuevo');
+                });
+
+            $('#FechaSalidaModificar').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).on('change', function (e) {
+                $('#form_enviarEditar').formValidation('revalidateField', 'FechaSalidaModificar');
+            });
+        if(AppGlobal.user.role === 'Administrador')
+        {
+        var table = $('#tablaReservas').DataTable(
+                {
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "Búsqueda sin resultados",
+                        "info": "Página _PAGE_ de _PAGES_",
+                        "infoEmpty": "No hay registros",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "first": "Primera página",
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Siguiente"
+                        }
+                    },
+                    "paging": true,
+                    "info": false,
+                    "ordering": false,
+                    "pageLength": 5,
+                    "lengthMenu": [5, 10, 25],
+                "dom": 'Bfrtip',
+                "buttons": [
+                ],
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
+                        { "data": "FechaSalida", "width": 65 },
+                        { "data": "Servicio" },
+                        { "data": "Cliente" },
+                        { "data": "Retiro" },
+                        { "data": "TipoRetiro" },
+                        { "data": "Total" },
+                        { "data": "Estado" },  
+                        { "data": "Vendedor" },   
+                        { "data": "PaxAdulto" },   
+                        { "data": "PrecioAdulto" },   
+                        { "data": "PaxInfante" },   
+                        { "data": "PrecioInfante" },   
+                        { "data": "EstadoPago" },   
+                        { "data": "Observaciones" },
+                        { "data": "FechaIngreso" },
+                        { "data": "ClienteCompleto" },
+                        { "data": "Email" },
+                        { "data": "Telefonos" },
+                        { "data": "Acciones", "width": 60 }
+                    ],
+                    "columnDefs": [
+                        {
+                            "targets": [4,6,8,9,10,11,12,14,15,16,17,18],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ]
+                });
+        }
+        else if(AppGlobal.user.role === 'Vendedor')
+        {
+        var table = $('#tablaReservas').DataTable(
+                {
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "Búsqueda sin resultados",
+                        "info": "Página _PAGE_ de _PAGES_",
+                        "infoEmpty": "No hay registros",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "first": "Primera página",
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Siguiente"
+                        }
+                    },
+                    "paging": true,
+                    "info": false,
+                    "ordering": false,
+                    "pageLength": 5,
+                    "lengthMenu": [5, 10, 25],
+                    "dom": 'Bfrtip',
+                    "buttons": [
+                    ],
+                    "columns": [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
+                        { "data": "FechaSalida", "width": 65 },
+                        { "data": "Servicio" },
+                        { "data": "Cliente" },
+                        { "data": "Retiro" },
+                        { "data": "TipoRetiro" },
+                        { "data": "Total" },
+                        { "data": "Estado" },  
+                        { "data": "Vendedor" },   
+                        { "data": "PaxAdulto" },   
+                        { "data": "PrecioAdulto" },   
+                        { "data": "PaxInfante" },   
+                        { "data": "PrecioInfante" },   
+                        { "data": "EstadoPago" },   
+                        { "data": "Observaciones" },
+                        { "data": "FechaIngreso" },
+                        { "data": "ClienteCompleto" },
+                        { "data": "Email" },
+                        { "data": "Telefonos" },
+                        { "data": "Acciones", "width": 60 }
+                    ],
+                    "columnDefs": [
+                        {   
+                            "targets": [4,6,8,9,10,11,12,13,14,15,16,17,18],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ]
+                });
+        }
+            
+
+            $('#tablaReservas tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+
+            $('#EstadoPago').select();
+
+            total();
+
+        });
+
+        function format(d) {
+            console.log(d);
+            // `d` is the original data object for the row
+            return '<table width="100%" border="0">' +
+                '<tr>' +
+                '<td><b>Cliente:</b></td>' +
+                '<td>' + d.ClienteCompleto + '</td>' +
+                '<td><b>Contacto:</b></td>' +
+                '<td>' + d.Telefonos + '. ' + d.Email +'</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td><b>Retiro:</b></td>' +
+                '<td>' + d.TipoRetiro + '</td>' +
+                '<td><b>Lugar:</b></td>' +
+                '<td>' + d.Retiro + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td><b>Pax Adultos:</b></td>' +
+                '<td>' + d.PaxAdulto + ' a $' + number_format(d.PrecioAdulto,0) + ' c/u</td>' +
+                '<td><b>Pax Infantes:</b></td>' +
+                '<td>' + d.PaxInfante + ' a $' + number_format(d.PrecioInfante,0) + ' c/u</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td><b>Observaciones:</b></td>' +
+                '<td>' + d.Observaciones + '</td>' +
+                '<td><b>Fecha Ingreso:</b></td>' +
+                '<td>' + d.FechaIngreso + '</td>' +
+                '</tr>' +
+                '<tr>' +         
+                '<td><b>Vendedor:</b></td>' +
+                '<td>' + d.Vendedor + '</td>' +
+                '<td><b>Total:</b></td>' +
+                '<td>' + d.Total + '</td>' +
+                '</tr>' +
+                '</table>';
+        }
+
+        function consultaEliminar(id) {
+            swal({
+                title: "¿Estás seguro?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                allowOutsideClick: false,
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                    return new Promise(function (resolve, reject) {
+                        $.ajax({
+                            success: function (response) {
+                                resolve(response)
+                            },
+                            error: function (a, b, c) {
+                                reject("error message")
+                            }
+                        })
+                    })
+                }
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Reservas/EliminarReserva',
+                        data: { id: id },
+                        cache: false,
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+                            if (response == "Exito") {
+                                swal("Reserva eliminada", "", "success");
+                                setTimeout(function () {
+                                    $('#filtrarReservas').click();
+                                }, 2500);
+
+                            }
+                            else {
+                                swal("Ocurrió un error", "Contáctese con el administrador", "error");
+                            }
+                        }
+                    });
+                }
+                else {
+                    swal("Operación cancelada", "Todo sigue como antes :)", "error");
+                }
+            });
+        }
+
+        function modificar(id) {
+            $.ajax({
+                type: "POST",
+                url: '/Reservas/Obtener',
+                data: { id: id },
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+
+                    $('#IdReservaModificar').val(id);
+
+                    $('#FechaSalidaModificar').datepicker("setDate", new Date(data.anoSalida, data.mesSalida - 1, data.diaSalida));
+                    $('#NombreClienteModificar').val(data.nombreCliente);
+                    $('#IdClienteSeleccionadoModificar').val(data.idCliente);
+                    $('#Telefono1ClienteModificar').val(data.telefono1);
+                    $('#Telefono2ClienteModificar').val(data.telefono2);
+
+                    $('#IdServicioModificar').val(data.idServicio);
+                    $('#EstadoPagoModificar').val(data.estadoPago);
+
+                    $('#PaxAdultoModificar').val(data.paxAdulto);
+                    $('#PrecioAdultoModificar').val(data.precioAdulto);
+                    $('#PaxInfanteModificar').val(data.paxInfante);
+                    $('#PrecioInfanteModificar').val(data.precioInfante);
+                    $('#ObservacionesModificar').val(data.observaciones);
+                    $('#TotalModificar').val(data.total);
+                    $('#TotalModificarMostrar').text('$ ' + number_format(data.total,0));
+                    $('#IdServicioModificar').change();
+
+                    $('#IdLugarRetiroModificar').val(data.tipoDireccion);
+                    $('#IdLugarRetiroModificar').change();
+
+                    // $('#direccionesModificar').val(data.idDireccion);
+                    direccionAuxiliar = data.idDireccion;
+                    $('#ModalEditarReserva').modal();
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+
+        function total() {
+            var paxAdulto = $('#PaxAdultoNuevo').val();
+            var cantidadAdulto = $('#PrecioAdultoNuevo').val();
+            var paxInfante = $('#PaxInfanteNuevo').val();
+            var cantidadInfante = $('#PrecioInfanteNuevo').val();
+            var total = (paxAdulto * cantidadAdulto) + (paxInfante * cantidadInfante);
+            // console.log("total: " + total);
+            $('#TotalNuevo').val(total);
+            $('#TotalNuevoMostrar').text(" $ " + number_format(total,0));
+        }
+
+    </script>
+
+
+    <script src="../plugins/bower_components/custom-select/custom-select.min.js" type="text/javascript"></script>
+    <script src="../plugins/bower_components/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="../plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+}
+
+
