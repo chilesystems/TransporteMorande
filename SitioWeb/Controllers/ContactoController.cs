@@ -20,7 +20,7 @@ namespace SitioWeb.Controllers
             {
                 TempData["idioma"] = "es";
             }
-            return View(msg);
+            return View(null, null, msg);
         }
 
         [HttpPost]
@@ -110,13 +110,13 @@ namespace SitioWeb.Controllers
                 {
                     retorno = ex.Message + ". " + ex.StackTrace + ". " + ex.InnerException.Message + ". " + ex.InnerException.ToString() + ". " + ex.InnerException.StackTrace;
                 }
-
-                return View("Index", new { retorno });
+                //return View("Index", new { msg = retorno });
+                return RedirectToAction("Index", new { msg = retorno });
             }
             catch (Exception ex)
             {
                 string retorno = ex.Message + ". " + ex.StackTrace + ". " + ex.InnerException.Message + ". " + ex.InnerException.ToString() + ". " + ex.InnerException.StackTrace;
-                return View("Index", new { retorno });
+                return RedirectToAction("Index", new { msg = retorno });
             }
         }
 
