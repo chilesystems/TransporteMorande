@@ -15,14 +15,16 @@ namespace TransporteMorande.Controllers
 
         public ActionResult Index(HotelViewModel model)
         {
-            List<Hotel> lista = db.Hotel.ToList();
-            if (!string.IsNullOrEmpty(model.NombreSeleccionado))
-                lista = lista.Where(x => x.Nombre.ToUpper().Contains(model.NombreSeleccionado.ToUpper())).ToList();
-            if (!string.IsNullOrEmpty(model.DireccionSeleccionada))
-                lista = lista.Where(x => x.Direccion.ToUpper().Contains(model.DireccionSeleccionada.ToUpper())).ToList();
-            if (model.TipoSeleccionado != "Todos" &&  !string.IsNullOrEmpty(model.TipoSeleccionado))
-                lista = lista.Where(x => x.tipo == model.TipoSeleccionado).ToList();
-            model.Hoteles = lista;
+            //List<Hotel> lista = db.Hotel.ToList();
+            //if (!string.IsNullOrEmpty(model.NombreSeleccionado))
+            //    lista = lista.Where(x => x.Nombre.ToUpper().Contains(model.NombreSeleccionado.ToUpper())).ToList();
+            //if (!string.IsNullOrEmpty(model.DireccionSeleccionada))
+            //    lista = lista.Where(x => x.Direccion.ToUpper().Contains(model.DireccionSeleccionada.ToUpper())).ToList();
+            //if (model.TipoSeleccionado != "Todos" &&  !string.IsNullOrEmpty(model.TipoSeleccionado))
+            //    lista = lista.Where(x => x.tipo == model.TipoSeleccionado).ToList();
+            //model.Hoteles = lista;
+
+            model.Hoteles = new List<Hotel>();
             return View(model);
         }
 

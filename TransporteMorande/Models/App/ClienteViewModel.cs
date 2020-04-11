@@ -29,34 +29,34 @@ namespace TransporteMorande.Models.App
             {
                 new SelectListItem() { Text="Domicilios del cliente", Value=null, Selected = true },
             };
-            Domicilios.AddRange(new SelectList(db.Domicilio.Select(x => new { Id = x.Id, Nombre = x.Calle + " " + x.Numero + " " + x.Complemento }).OrderBy(x => x.Id), "Id", "Nombre")); 
+            //Domicilios.AddRange(new SelectList(db.Domicilio.Select(x => new { Id = x.Id, Nombre = x.Calle + " " + x.Numero + " " + x.Complemento }).OrderBy(x => x.Id), "Id", "Nombre")); 
             Paises = new List<SelectListItem>()
             {
                 new SelectListItem() { Text="Todos", Value=null, Selected = true }
             };
-            Paises.AddRange(new SelectList(db.Pais.OrderBy(x => x.Nombre), "Id", "Nombre"));
+            //Paises.AddRange(new SelectList(db.Pais.OrderBy(x => x.Nombre), "Id", "Nombre"));
 
             Idiomas = new List<SelectListItem>()
             {
                 new SelectListItem() { Text="Todos", Value=null, Selected = true }
             };
-            Idiomas.AddRange(new SelectList(db.Idioma.OrderBy(x => x.Nombre), "Id", "Nombre"));
+           // Idiomas.AddRange(new SelectList(db.Idioma.OrderBy(x => x.Nombre), "Id", "Nombre"));
 
-            var paisChile = db.Pais.First(x => x.Sigla == "CL");
+            //var paisChile = db.Pais.First(x => x.Sigla == "CL");
             PaisesNuevoCliente = new List<SelectListItem>()
             {
-                new SelectListItem() { Text=paisChile.Nombre, Value= paisChile.Id.ToString(), Selected = true },
+                //new SelectListItem() { Text=paisChile.Nombre, Value= paisChile.Id.ToString(), Selected = true },
                 new SelectListItem() { Text="Seleccione País", Value=null }
             };
-            PaisesNuevoCliente.AddRange(new SelectList(db.Pais.Where(x => x.Sigla != "CL").OrderBy(x => x.Nombre), "Id", "Nombre"));
+            //PaisesNuevoCliente.AddRange(new SelectList(db.Pais.Where(x => x.Sigla != "CL").OrderBy(x => x.Nombre), "Id", "Nombre"));
 
-            var idiomaEspanol = db.Idioma.First(x => x.Sigla == "ES");
+           // var idiomaEspanol = db.Idioma.First(x => x.Sigla == "ES");
             IdiomasNuevoCliente = new List<SelectListItem>()
             {
-                new SelectListItem() { Text=idiomaEspanol.Nombre, Value=idiomaEspanol.Id.ToString(), Selected = true },
+               // new SelectListItem() { Text=idiomaEspanol.Nombre, Value=idiomaEspanol.Id.ToString(), Selected = true },
                 new SelectListItem() { Text="Seleccione Idioma", Value=null }
             };
-            IdiomasNuevoCliente.AddRange(new SelectList(db.Idioma.Where(x => x.Sigla != "ES").OrderBy(x => x.Nombre), "Id", "Nombre"));
+            //IdiomasNuevoCliente.AddRange(new SelectList(db.Idioma.Where(x => x.Sigla != "ES").OrderBy(x => x.Nombre), "Id", "Nombre"));
         }
     }
 }
